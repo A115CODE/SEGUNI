@@ -1,0 +1,100 @@
+// Inicializar Supabase
+const { createClient } = supabase;
+
+const SUPABASE_URL = 'https://dvuqnktmjvotdlnbbnhw.supabase.co';
+const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2dXFua3RtanZvdGRsbmJibmh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MTMxNzUsImV4cCI6MjA1NjA4OTE3NX0.NBjk0irYgv23oENmlKSLHJWG6fykfsI8X1hUHrVwT2Y';
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const FRAMEAPP = document.getElementById('FRAMEAPP');
+
+const TASK = document.createElement('section');
+TASK.classList.add('aplication');
+TASK.id = 'TASK';
+FRAMEAPP.appendChild(TASK);
+
+const TXT_APP = document.createElement('h3');
+TXT_APP.id = 'TXT_APP';
+TXT_APP.textContent = 'TAREAS';
+TASK.appendChild(TXT_APP);
+
+const FORM = document.createElement('form');
+FORM.id = 'task-form';
+TASK.appendChild(FORM);
+
+const INPUT = document.createElement('input');
+INPUT.type = 'text';
+INPUT.id = 'TASK_INPUT';
+INPUT.placeholder = 'Nueva Tarea';
+FORM.appendChild(INPUT);
+
+const BUTTON = document.createElement('button');
+BUTTON.id = 'TASK_BTN';
+BUTTON.type = 'submit';
+BUTTON.textContent = 'Agregar';
+FORM.appendChild(BUTTON);
+
+// LISTA
+const LIST = document.createElement('ul');
+LIST.id = 'TASK_LIST';
+TASK.appendChild(LIST);
+
+// Función para obtener tareas desde Supabase
+async function fetchTasks() {
+  const { data, error } = await supabaseClient.from('tasks').select('*');
+  if (error) {
+    console.error('Error obteniendo tareas:', error);
+    return;
+  }
+  renderTasks(data);
+}
+
+// Función para renderizar tareas en el DOM
+function renderTasks(tasks) {
+  LIST.innerHTML = ''; // Limpiar lista antes de renderizar
+  tasks.forEach((task) => {
+    const li = document.createElement('li');
+    li.className = 'task_item';
+    li.innerHTML = `
+      <p class="txt_item">${task.text}</p>
+      <button class="btn_item" data-id="${task.id}">Eliminar</button>
+    `;
+    LIST.appendChild(li);
+  });
+}
+
+// Evento para agregar tarea
+FORM.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const taskText = INPUT.value.trim();
+  if (taskText !== '') {
+    const { data, error } = await supabaseClient
+      .from('tasks')
+      .insert([{ text: taskText }]);
+    if (error) {
+      console.error('Error agregando tarea:', error);
+      return;
+    }
+    fetchTasks(); // Recargar tareas desde Supabase
+    INPUT.value = ''; // Limpiar input
+  }
+});
+
+// Evento para eliminar tareas
+LIST.addEventListener('click', async (e) => {
+  if (e.target.tagName === 'BUTTON') {
+    const taskId = e.target.getAttribute('data-id');
+    const { error } = await supabaseClient
+      .from('tasks')
+      .delete()
+      .eq('id', taskId);
+    if (error) {
+      console.error('Error eliminando tarea:', error);
+      return;
+    }
+    fetchTasks(); // Recargar lista después de eliminar
+  }
+});
+
+// Cargar tareas al inicio
+fetchTasks();

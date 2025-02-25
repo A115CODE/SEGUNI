@@ -1,0 +1,27 @@
+#NAVBAR {
+  height: 30vh;
+  background-color: var(--seguni-color);
+  color: var(--font-1);
+  border-radius: 0 0 25px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.nav_button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.nav_button:hover {
+  transform: scale(1.1);
+}
+.txt {
+  margin: 5px 0;
+  font-weight: bold;
+  font-size: 75%;
+}
+#HOME {
+  width: 24px;
+}

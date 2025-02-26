@@ -56,6 +56,7 @@ async function loadNotes() {
   // Agregar cada nota a la lista
   data.forEach((note) => {
     const li = document.createElement("li");
+    li.classList.add("note_item")
     li.textContent = note.content;
     NOTES_LIST.appendChild(li);
   });

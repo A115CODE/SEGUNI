@@ -32,3 +32,23 @@ NOTES_BUTTON.id = "NOTES_BUTTON";
 NOTES_BUTTON.type = "submit"
 NOTES_BUTTON.textContent = "Agregar";
 NOTES_FORM.appendChild(NOTES_BUTTON);
+
+// Evento para guardar la nota en Supabase
+NOTES_FORM.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const content = NOTES_TXTAREA.value.trim();
+  if (!content) return;
+
+  const { data, error } = await supabaseClient
+    .from("notes")
+    .insert([{ content }]);
+
+  if (error) {
+    console.error("Error al guardar la nota:", error.message);
+    return;
+  }
+
+  console.log("Nota guardada:", data);
+  NOTES_TXTAREA.value = ""; // Limpiar textarea después de guardar
+});

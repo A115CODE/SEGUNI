@@ -43,3 +43,16 @@ button {
 button:hover {
   transform: scale(1.08);
 }
+/*1024px pc*/
+@media (min-width: 600px) {
+  #DASHBOARD {
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 0.5fr 6fr;
+  }
+}
+@media (min-width: 1024px) {
+  #DASHBOARD {
+    grid-template-columns: 1fr 10fr;
+    grid-template-rows: 0.5fr 10fr;
+  }
+}

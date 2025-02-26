@@ -25,8 +25,3 @@
 #HOME {
   width: 24px;
 }
-@media (min-width: 720px) {
-  #NAVBAR {
-    width: 60%;
-  }
-}

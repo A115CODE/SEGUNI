@@ -18,6 +18,9 @@ DEPLOY_SCRIPT('./app/app.js');
 //TASKS
 DEPLOY_SCRIPT('./app/modules/task/task.js');
 DEPLOY_CSS('./app/modules/task/task.css');
+//NOTES
+DEPLOY_SCRIPT('./app/modules/notes/notes.js');
+DEPLOY_CSS('./app/modules/notes/notes.css');
 //DASHBOARD
 DEPLOY_SCRIPT('./app/modules/dashboard/dashboard.js');
 DEPLOY_CSS('./app/modules/dashboard/dashboard.css');

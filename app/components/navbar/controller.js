@@ -16,5 +16,6 @@ function controller(ID_BTN, ID_APP) {
 
 // Llamadas a la función, asignando la misma clase a los elementos controlados
 controller('HOME_BTN', 'HOME');
-controller('DATABASE_BTN', 'DB');
 controller('TASK_BTN', 'TASK');
+controller('NOTES_BTN', 'NOTES');
+controller('DATABASE_BTN', 'DB');

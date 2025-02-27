@@ -16,7 +16,7 @@ FRAMEAPP.appendChild(NOTES);
 
 const NOTES_TXT = document.createElement("h3");
 NOTES_TXT.id = "NOTES_TXT";
-NOTES_TXT.textContent = "NOTAS RÁPIDAS";
+NOTES_TXT.textContent = "MIS NOTAS";
 NOTES.appendChild(NOTES_TXT);
 
 const NOTES_FORM = document.createElement("form");

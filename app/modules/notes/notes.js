@@ -56,8 +56,15 @@ async function loadNotes() {
   // Agregar cada nota a la lista
   data.forEach((note) => {
     const li = document.createElement("li");
-    li.classList.add("note_item")
+    li.classList.add("note_item");
     li.textContent = note.content;
+
+    // Agregar el evento aquí, porque el elemento se crea en este momento
+    li.addEventListener("click", function() {
+      this.classList.toggle("note_item_open");
+      console.log("Clase agregada dinámicamente a:", this);
+    });
+
     NOTES_LIST.appendChild(li);
   });
 }
@@ -84,3 +91,13 @@ NOTES_FORM.addEventListener("submit", async (event) => {
 
 // Cargar notas al iniciar
 loadNotes();
+
+//Abrir Ntas
+document.addEventListener("DOMContentLoaded", function() {
+  document.body.addEventListener("click", function(event) {
+    if (event.target.classList.contains("note_item")) {
+      event.target.classList.toggle("note_item_open");
+      console.log("Clase agregada dinámicamente a:", event.target);
+    }
+  });
+});

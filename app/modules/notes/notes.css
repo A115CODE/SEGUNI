@@ -59,11 +59,12 @@ textarea:focus {
     border-radius: 12px;
     transition: var(--transition);
   }
-.note_item:active{
+.note_item_open{
     width: 85%;
     height: auto;
     box-sizing: content-box;
     transform: scale(1.1);
     white-space: unset;
     font-weight: lighter;
+    background-color: aqua;
 }

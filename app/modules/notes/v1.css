@@ -36,19 +36,20 @@ textarea:focus {
     color: var(--font-1);
 }
 #NOTES_LIST{
-    width: 95%;
+    width: 100%;
     text-align:left;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     overflow-y: scroll;
-    justify-content: space-evenly;
 }
 .note_item {
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
+    width: 80%;
     background-color: #efefef;
-    margin: 12px;
-    padding: 1em;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 12px;
   }

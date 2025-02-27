@@ -37,7 +37,7 @@ textarea:focus {
 }
 #NOTES_LIST{
     width: 90%;
-    padding: 0 1em;
+    padding: 0 1em 0 0;
     text-align:left;
     display: flex;
     flex-wrap: wrap;

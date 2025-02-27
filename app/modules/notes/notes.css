@@ -36,7 +36,8 @@ textarea:focus {
     color: var(--font-1);
 }
 #NOTES_LIST{
-    width: 95%;
+    width: 90%;
+    padding: 0 1em;
     text-align:left;
     display: flex;
     flex-wrap: wrap;
@@ -59,7 +60,7 @@ textarea:focus {
     transition: var(--transition);
   }
 .note_item:active{
-    width: auto;
+    width: 85%;
     height: auto;
     box-sizing: content-box;
     transform: scale(1.1);

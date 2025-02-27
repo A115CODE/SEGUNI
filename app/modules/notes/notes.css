@@ -51,4 +51,11 @@ textarea:focus {
     margin: 12px;
     padding: 1em;
     border-radius: 12px;
+    transition: var(--transition);
   }
+.note_item:active{
+    width: auto;
+    height: auto;
+    box-sizing: content-box;
+    transform: scale(1.1);
+}

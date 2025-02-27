@@ -66,5 +66,4 @@ textarea:focus {
     transform: scale(1.1);
     white-space: unset;
     font-weight: lighter;
-    background-color: aqua;
 }

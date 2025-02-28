@@ -71,23 +71,32 @@ async function loadNotes() {
     content.textContent = note.content;
     li.appendChild(content);
 
+    //Contenedor Button
+    const buttons = document.createElement("div");
+    buttons.classList.add("buttons_li");
+    li.appendChild(buttons);
+
     // Botón para eliminar la nota
     const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Eliminar";
+    deleteButton.innerHTML = `
+    <img src="../../../assets/delete.svg" />
+    `;
     deleteButton.classList.add("delete_button");
     deleteButton.addEventListener("click", async () => {
       await deleteNote(note.id);
     });
-    li.appendChild(deleteButton);
+    buttons.appendChild(deleteButton);
 
     // Botón para editar la nota
     const editButton = document.createElement("button");
-    editButton.textContent = "Editar";
+    editButton.innerHTML = `
+    <img src="../../../assets/edit.svg" />
+    `;
     editButton.classList.add("edit_button");
     editButton.addEventListener("click", () => {
       editNote(note);
     });
-    li.appendChild(editButton);
+    buttons.appendChild(editButton);
 
     NOTES_LIST.appendChild(li);
 

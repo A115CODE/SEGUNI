@@ -106,3 +106,9 @@ textarea:focus {
     font-weight: lighter;
     transform: scale(1);
 }
+
+.buttons_li{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}

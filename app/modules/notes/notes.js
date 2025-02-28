@@ -25,12 +25,12 @@ NOTES.appendChild(NOTES_FORM);
 
 const NOTES_INTITLE = document.createElement("input");
 NOTES_INTITLE.id = "NOTES_INTITLE";
-NOTES_INTITLE.placeholder = "Título de la nota";
+NOTES_INTITLE.placeholder = "Título de la nota";
 NOTES_FORM.appendChild(NOTES_INTITLE);
 
 const NOTES_TXTAREA = document.createElement("textarea");
 NOTES_TXTAREA.id = "NOTES_TXTAREA";
-NOTES_TXTAREA.placeholder = "Nota rápida...";
+NOTES_TXTAREA.placeholder = "Nota rápida...";
 NOTES_FORM.appendChild(NOTES_TXTAREA);
 
 const NOTES_BUTTON = document.createElement("button");
@@ -43,7 +43,7 @@ const NOTES_LIST = document.createElement("ul");
 NOTES_LIST.id = "NOTES_LIST";
 NOTES.appendChild(NOTES_LIST);
 
-// Función para obtener y mostrar las notas
+// Función para obtener y mostrar las notas
 async function loadNotes() {
   const { data, error } = await supabaseClient
     .from("notes")
@@ -55,34 +55,84 @@ async function loadNotes() {
     return;
   }
 
-  // Limpiar la lista antes de actualizar
-  NOTES_LIST.innerHTML = "";
+  NOTES_LIST.innerHTML = ""; // Limpiar lista antes de actualizar
 
-  // Agregar cada nota a la lista
   data.forEach((note) => {
     const li = document.createElement("li");
     li.classList.add("note_item");
 
-    // Crear el contenedor del título
     const title = document.createElement("h4");
-    title.classList.add("note_title"); // Nueva clase para estilizar
-    title.textContent = note.title || "Sin título"; // Mostrar "Sin título" si está vacío
+    title.classList.add("note_title");
+    title.textContent = note.title || "Sin título";
     li.appendChild(title);
 
-    // Crear el contenedor del contenido
     const content = document.createElement("p");
-    content.classList.add("note_content"); // Nueva clase para estilizar
+    content.classList.add("note_content");
     content.textContent = note.content;
     li.appendChild(content);
 
-    // Evento para abrir/cerrar la nota
-    li.addEventListener("click", function () {
-      this.classList.toggle("note_item_open");
-      console.log("Clase agregada dinámicamente a:", this);
+    // Botón para eliminar la nota
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Eliminar";
+    deleteButton.classList.add("delete_button");
+    deleteButton.addEventListener("click", async () => {
+      await deleteNote(note.id);
     });
+    li.appendChild(deleteButton);
+
+    // Botón para editar la nota
+    const editButton = document.createElement("button");
+    editButton.textContent = "Editar";
+    editButton.classList.add("edit_button");
+    editButton.addEventListener("click", () => {
+      editNote(note);
+    });
+    li.appendChild(editButton);
 
     NOTES_LIST.appendChild(li);
+
+        // Evento para abrir/cerrar la nota
+        li.addEventListener("click", function () {
+          this.classList.toggle("note_item_open");
+          console.log("Clase agregada dinámicamente a:", this);
+        });
+    
   });
+}
+
+// Función para eliminar una nota
+async function deleteNote(noteId) {
+  const { error } = await supabaseClient
+    .from("notes")
+    .delete()
+    .eq("id", noteId);
+
+  if (error) {
+    console.error("Error al eliminar la nota:", error.message);
+    return;
+  }
+
+  loadNotes(); // Recargar notas después de eliminar
+}
+
+// Función para editar una nota
+async function editNote(note) {
+  const newTitle = prompt("Nuevo título:", note.title);
+  const newContent = prompt("Nuevo contenido:", note.content);
+
+  if (newTitle !== null && newContent !== null) {
+    const { error } = await supabaseClient
+      .from("notes")
+      .update({ title: newTitle, content: newContent })
+      .eq("id", note.id);
+
+    if (error) {
+      console.error("Error al actualizar la nota:", error.message);
+      return;
+    }
+
+    loadNotes(); // Recargar notas después de editar
+  }
 }
 
 // Evento para guardar la nota en Supabase
@@ -102,7 +152,7 @@ NOTES_FORM.addEventListener("submit", async (event) => {
     return;
   }
 
-  NOTES_INTITLE.value = ""; // Limpiar input título
+  NOTES_INTITLE.value = ""; // Limpiar input título
   NOTES_TXTAREA.value = ""; // Limpiar textarea
   loadNotes(); // Actualizar la lista
 });

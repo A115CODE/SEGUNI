@@ -63,11 +63,15 @@ async function loadNotes() {
     const li = document.createElement("li");
     li.classList.add("note_item");
 
+    // Crear el contenedor del título
     const title = document.createElement("h4");
+    title.classList.add("note_title"); // Nueva clase para estilizar
     title.textContent = note.title || "Sin título"; // Mostrar "Sin título" si está vacío
     li.appendChild(title);
 
+    // Crear el contenedor del contenido
     const content = document.createElement("p");
+    content.classList.add("note_content"); // Nueva clase para estilizar
     content.textContent = note.content;
     li.appendChild(content);
 

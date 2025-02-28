@@ -47,35 +47,62 @@ textarea:focus {
     background-color: var(--seguni-color);
     color: var(--font-1);
 }
-#NOTES_LIST{
+#NOTES_LIST {
     width: 90%;
     padding: 0 1em 0 0;
-    text-align:left;
+    text-align: left;
     display: flex;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    overflow-y: auto; /* Cambié scroll por auto */
     justify-content: space-evenly;
     overflow-x: hidden;
 }
+
+.note_title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.note_content {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    display: none; /* Oculto por defecto */
+}
+
 .note_item {
     width: 70px;
     height: 70px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-weight: bold;
-    display: block;
     background-color: #efefef;
     margin: 12px;
     padding: 1em;
     border-radius: 12px;
-    transition: var(--transition);
-  }
-.note_item_open{
-    width: 85%;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cuando se abre la nota */
+.note_item_open {
+    width: 200px; /* Aumentamos el tamaño cuando está abierta */
+    height: auto; /* Permite que crezca según el contenido */
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+}
+
+.note_item_open .note_content {
+    display: block;
+    width: 100%;
     height: auto;
-    box-sizing: content-box;
-    transform: scale(1.1);
-    white-space: unset;
     font-weight: lighter;
+    transform: scale(1);
 }

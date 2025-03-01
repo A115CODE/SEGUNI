@@ -2,6 +2,7 @@
   --seguni-color: #00457d;
   --font-1: #fff;
   --transition: all ease 200ms;
+  --shadow: 3px 3px 7px #0000009f;
 }
 * {
   margin: 0;
@@ -23,6 +24,7 @@ body {
 }
 #NAVBAR {
   grid-area: navbar;
+  box-shadow: var(--shadow);
 }
 #HEADER {
   grid-area: header;

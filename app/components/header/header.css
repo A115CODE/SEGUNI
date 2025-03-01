@@ -4,9 +4,19 @@
   justify-content: space-between;
 }
 #LOGO {
-  width: 100px;
+  width: 30%;
   margin: 0 1em;
 }
 #SINGOUT {
   margin: 0 1em;
+}
+@media (min-width: 600px) {
+  #LOGO {
+    width: 20%;
+  }
+}
+@media (min-width: 1024px) {
+  #LOGO {
+    width: 15%;
+  }
 }

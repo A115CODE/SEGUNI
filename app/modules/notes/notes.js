@@ -81,7 +81,7 @@ async function loadNotes() {
     deleteButton.innerHTML = `
     <img src="../../../assets/delete.svg" />
     `;
-    deleteButton.classList.add("delete_button");
+    deleteButton.classList.add("btn_li");
     deleteButton.addEventListener("click", async () => {
       await deleteNote(note.id);
     });
@@ -92,7 +92,7 @@ async function loadNotes() {
     editButton.innerHTML = `
     <img src="../../../assets/edit.svg" />
     `;
-    editButton.classList.add("edit_button");
+    editButton.classList.add("btn_li");
     editButton.addEventListener("click", () => {
       editNote(note);
     });

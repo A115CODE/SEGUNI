@@ -58,6 +58,23 @@ textarea:focus {
     overflow-x: hidden;
 }
 
+.note_item {
+    /*
+    width: 70px;
+    height: 70px;
+    */
+    background-color: #efefef;
+    margin: 12px;
+    padding: 1em;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
 .note_title {
     font-size: 18px;
     font-weight: bold;
@@ -72,25 +89,6 @@ textarea:focus {
     display: none; /* Oculto por defecto */
 }
 
-.note_item {
-    width: 70px;
-    height: 70px;
-    background-color: #efefef;
-    margin: 12px;
-    padding: 1em;
-    border-radius: 12px;
-    transition: all 0.3s ease-in-out;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Cuando se abre la nota */
 .note_item_open {
     width: 200px; /* Aumentamos el tamaño cuando está abierta */
     height: auto; /* Permite que crezca según el contenido */
@@ -105,10 +103,14 @@ textarea:focus {
     height: auto;
     font-weight: lighter;
     transform: scale(1);
+    transition: var(--transition);
 }
 
-.buttons_li{
-    width: 70%;
+.buttons_li {
     display: flex;
     justify-content: space-between;
+}
+.btn_li {
+    border: none;
+    padding: 5px;
 }

@@ -25,12 +25,12 @@ NOTES.appendChild(NOTES_FORM);
 
 const NOTES_INTITLE = document.createElement("input");
 NOTES_INTITLE.id = "NOTES_INTITLE";
-NOTES_INTITLE.placeholder = "Título de la nota";
+NOTES_INTITLE.placeholder = "Título de la nota";
 NOTES_FORM.appendChild(NOTES_INTITLE);
 
 const NOTES_TXTAREA = document.createElement("textarea");
 NOTES_TXTAREA.id = "NOTES_TXTAREA";
-NOTES_TXTAREA.placeholder = "Nota rápida...";
+NOTES_TXTAREA.placeholder = "Nota rápida...";
 NOTES_FORM.appendChild(NOTES_TXTAREA);
 
 const NOTES_BUTTON = document.createElement("button");
@@ -43,7 +43,8 @@ const NOTES_LIST = document.createElement("ul");
 NOTES_LIST.id = "NOTES_LIST";
 NOTES.appendChild(NOTES_LIST);
 
-// Función para obtener y mostrar las notas
+let editingNoteId = null; // Para saber si estamos editando una nota existente
+
 async function loadNotes() {
   const { data, error } = await supabaseClient
     .from("notes")
@@ -55,7 +56,7 @@ async function loadNotes() {
     return;
   }
 
-  NOTES_LIST.innerHTML = ""; // Limpiar lista antes de actualizar
+  NOTES_LIST.innerHTML = "";
 
   data.forEach((note) => {
     const li = document.createElement("li");
@@ -63,7 +64,7 @@ async function loadNotes() {
 
     const title = document.createElement("h4");
     title.classList.add("note_title");
-    title.textContent = note.title || "Sin título";
+    title.textContent = note.title || "Sin título";
     li.appendChild(title);
 
     const content = document.createElement("p");
@@ -71,100 +72,77 @@ async function loadNotes() {
     content.textContent = note.content;
     li.appendChild(content);
 
-    //Contenedor Button
     const buttons = document.createElement("div");
     buttons.classList.add("buttons_li");
     li.appendChild(buttons);
 
-    // Botón para eliminar la nota
     const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = `
-    <img src="../../../assets/delete.svg" />
-    `;
+    deleteButton.innerHTML = `<img src="../../../assets/delete.svg" />`;
     deleteButton.classList.add("btn_li");
     deleteButton.addEventListener("click", async () => {
       await deleteNote(note.id);
     });
     buttons.appendChild(deleteButton);
 
-    // Botón para editar la nota
     const editButton = document.createElement("button");
-    editButton.innerHTML = `
-    <img src="../../../assets/edit.svg" />
-    `;
+    editButton.innerHTML = `<img src="../../../assets/edit.svg" />`;
     editButton.classList.add("btn_li");
     editButton.addEventListener("click", () => {
-      editNote(note);
+      NOTES_INTITLE.value = note.title;
+      NOTES_TXTAREA.value = note.content;
+      NOTES_BUTTON.textContent = "Actualizar";
+      editingNoteId = note.id;
     });
     buttons.appendChild(editButton);
 
     NOTES_LIST.appendChild(li);
 
-        // Evento para abrir/cerrar la nota
-        li.addEventListener("click", function () {
-          this.classList.toggle("note_item_open");
-          console.log("Clase agregada dinámicamente a:", this);
-        });
-    
+            // Evento para abrir/cerrar la nota
+            li.addEventListener("click", function () {
+              this.classList.toggle("note_item_open");
+              console.log("Clase agregada dinámicamente a:", this);
+            });
   });
 }
 
-// Función para eliminar una nota
 async function deleteNote(noteId) {
-  const { error } = await supabaseClient
-    .from("notes")
-    .delete()
-    .eq("id", noteId);
-
+  const { error } = await supabaseClient.from("notes").delete().eq("id", noteId);
   if (error) {
     console.error("Error al eliminar la nota:", error.message);
     return;
   }
-
-  loadNotes(); // Recargar notas después de eliminar
+  loadNotes();
 }
 
-// Función para editar una nota
-async function editNote(note) {
-  const newTitle = prompt("Nuevo título:", note.title);
-  const newContent = prompt("Nuevo contenido:", note.content);
+NOTES_FORM.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const title = NOTES_INTITLE.value.trim();
+  const content = NOTES_TXTAREA.value.trim();
+  if (!content) return;
 
-  if (newTitle !== null && newContent !== null) {
+  if (editingNoteId) {
     const { error } = await supabaseClient
       .from("notes")
-      .update({ title: newTitle, content: newContent })
-      .eq("id", note.id);
+      .update({ title, content })
+      .eq("id", editingNoteId);
 
     if (error) {
       console.error("Error al actualizar la nota:", error.message);
       return;
     }
-
-    loadNotes(); // Recargar notas después de editar
-  }
-}
-
-// Evento para guardar la nota en Supabase
-NOTES_FORM.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const title = NOTES_INTITLE.value.trim();
-  const content = NOTES_TXTAREA.value.trim();
-  if (!content) return;
-
-  const { data, error } = await supabaseClient
-    .from("notes")
-    .insert([{ title, content }]);
-
-  if (error) {
-    console.error("Error al guardar la nota:", error.message);
-    return;
+    editingNoteId = null;
+    NOTES_BUTTON.textContent = "Agregar";
+  } else {
+    const { error } = await supabaseClient.from("notes").insert([{ title, content }]);
+    if (error) {
+      console.error("Error al guardar la nota:", error.message);
+      return;
+    }
   }
 
-  NOTES_INTITLE.value = ""; // Limpiar input título
-  NOTES_TXTAREA.value = ""; // Limpiar textarea
-  loadNotes(); // Actualizar la lista
+  NOTES_INTITLE.value = "";
+  NOTES_TXTAREA.value = "";
+  loadNotes();
 });
 
-// Cargar notas al iniciar
 loadNotes();

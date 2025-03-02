@@ -30,11 +30,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: scroll;
 }
 .data_base_item{
     width: 80%;
     background-color: var(--bg-items);
-    margin: 20px 0;
+    margin: 10px 0;
     padding: 10px;
     border-radius: 12px;
     box-shadow: var(--shadow);

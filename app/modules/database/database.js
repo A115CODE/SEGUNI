@@ -72,12 +72,13 @@ DB_FORM.addEventListener("submit", async (event) => {
 
   if (error) {
     console.error("Error al guardar:", error.message);
-    alert("Error al guardar los datos.");
+    console.error("Error al guardar los datos.");
   } else {
     console.log("Datos guardados correctamente:", data);
-    alert("Datos guardados exitosamente.");
+    console.error("Datos guardados exitosamente.");
     DB_FORM.reset();
   }
+  fetchData();
 });
 
 // Función para obtener y mostrar datos desde Supabase

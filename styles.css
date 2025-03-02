@@ -40,7 +40,7 @@ body {
   position: absolute;
 }
 input{
-  margin: 10px 0;
+  margin: 5px 0;
   padding: 10px;
   border-radius: 45px;
   border: 1px solid var(--seguni-color);

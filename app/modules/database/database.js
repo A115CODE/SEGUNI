@@ -49,6 +49,10 @@ DATA_BTN.id = "DATA_BTN";
 DATA_BTN.textContent = "Guardar";
 DATA_FORM.appendChild(DATA_BTN);
 
+const DATA_LIST = document.createElement("ul");
+DATA_LIST.id = "DATA_LIST";
+DATA.appendChild(DATA_LIST);
+
 // DB SupaBase
 // Captura el formulario
 const DB_FORM = document.getElementById("DATA_FORM");
@@ -75,3 +79,33 @@ DB_FORM.addEventListener("submit", async (event) => {
     DB_FORM.reset();
   }
 });
+
+// Función para obtener y mostrar datos desde Supabase
+async function fetchData() {
+    const DATA_LIST = document.getElementById("DATA_LIST");
+    DATA_LIST.innerHTML = ""; // Limpiar la lista antes de agregar datos
+  
+    const { data, error } = await supabaseClient
+      .from("base_conocimientos")
+      .select("*")
+      .order("created_at", { ascending: false });
+  
+    if (error) {
+      console.error("Error al obtener datos:", error.message);
+    } else {
+      data.forEach((item) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+          <strong>Reporte:</strong> ${item.report} <br>
+          <strong>Área:</strong> ${item.location} <br>
+          <strong>Categoría:</strong> ${item.category} <br>
+          <strong>Solución:</strong> ${item.solution} <br>
+          <hr>
+        `;
+        DATA_LIST.appendChild(listItem);
+      });
+    }
+  }
+  
+  // Cargar los datos al inicio
+  fetchData();

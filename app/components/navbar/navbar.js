@@ -18,4 +18,4 @@ function navbarBTNS(ID, SRC, TXT) {
 navbarBTNS('HOME_BTN', './assets/home.svg', 'HOME');
 navbarBTNS('TASK_BTN', './assets/task.svg', 'TASK');
 navbarBTNS('NOTES_BTN', './assets/notes.svg', 'NOTES');
-navbarBTNS('DATABASE_BTN', './assets/db.svg', ' DB');
+navbarBTNS('DATABASE_BTN', './assets/db.svg', ' DataBase');

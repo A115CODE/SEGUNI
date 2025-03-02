@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
 }
-#TXT_APP {
+#TASK_TXT {
   color: var(--seguni-color);
 }
 #TASK_INPUT {
@@ -14,10 +14,6 @@
   border-radius: 45px;
   border: 1px solid var(--seguni-color);
   transition: var(--transition);
-}
-#TASK_INPUT:focus {
-  outline: none;
-  transform: scale(1.05);
 }
 #TASK_BTN {
   padding: 10px 15px;

@@ -39,6 +39,17 @@ body {
   visibility: hidden;
   position: absolute;
 }
+input{
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 45px;
+  border: 1px solid var(--seguni-color);
+  transition: var(--transition);
+}
+input:focus {
+  outline: none;
+  transform: scale(1.05);
+}
 button {
   cursor: pointer;
   transition: var(--transition);

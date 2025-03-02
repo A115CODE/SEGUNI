@@ -1,0 +1,26 @@
+#DATABASE {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#DATA_TXT {
+    color: var(--seguni-color);
+    text-align: center;
+}
+
+#DATA_FORM{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#DATA_BTN {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 45px;
+    background-color: var(--seguni-color);
+    color: var(--font-1);
+}

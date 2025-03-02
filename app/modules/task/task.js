@@ -14,7 +14,7 @@ TASK.id = 'TASK';
 FRAMEAPP.appendChild(TASK);
 
 const TXT_APP = document.createElement('h3');
-TXT_APP.id = 'TXT_APP';
+TXT_APP.id = 'TASK_TXT';
 TXT_APP.textContent = 'TAREAS';
 TASK.appendChild(TXT_APP);
 

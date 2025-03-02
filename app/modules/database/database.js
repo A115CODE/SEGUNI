@@ -95,12 +95,12 @@ async function fetchData() {
     } else {
       data.forEach((item) => {
         const listItem = document.createElement("li");
+        listItem.classList.add("data_base_item");
         listItem.innerHTML = `
           <strong>Reporte:</strong> ${item.report} <br>
           <strong>Área:</strong> ${item.location} <br>
           <strong>Categoría:</strong> ${item.category} <br>
           <strong>Solución:</strong> ${item.solution} <br>
-          <hr>
         `;
         DATA_LIST.appendChild(listItem);
       });

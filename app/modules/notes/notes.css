@@ -63,7 +63,7 @@ textarea:focus {
     width: 70px;
     height: 70px;
     */
-    background-color: #efefef;
+    background-color: var(--bg-items);
     margin: 12px;
     padding: 1em;
     border-radius: 12px;

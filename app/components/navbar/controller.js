@@ -18,4 +18,4 @@ function controller(ID_BTN, ID_APP) {
 controller('HOME_BTN', 'HOME');
 controller('TASK_BTN', 'TASK');
 controller('NOTES_BTN', 'NOTES');
-controller('DATABASE_BTN', 'DB');
+controller('DATABASE_BTN', 'DATABASE');

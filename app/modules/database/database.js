@@ -1,4 +1,12 @@
-// Crear estructura HTML
+// SupaBase
+const { createClient } = supabase;
+
+const SUPABASE_URL = 'https://dvuqnktmjvotdlnbbnhw.supabase.co';
+const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2dXFua3RtanZvdGRsbmJibmh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MTMxNzUsImV4cCI6MjA1NjA4OTE3NX0.NBjk0irYgv23oENmlKSLHJWG6fykfsI8X1hUHrVwT2Y';
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Estructura HTML
 const FRAMEAPP = document.getElementById('FRAMEAPP');
 
 const DATA = document.createElement('section');
@@ -40,3 +48,30 @@ DATA_BTN.type = "submit";
 DATA_BTN.id = "DATA_BTN";
 DATA_BTN.textContent = "Guardar";
 DATA_FORM.appendChild(DATA_BTN);
+
+// DB SupaBase
+// Captura el formulario
+const DB_FORM = document.getElementById("DATA_FORM");
+
+// Evento para guardar datos en Supabase
+DB_FORM.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const report = document.getElementById("REPORT").value;
+  const location = document.getElementById("LOCATION").value;
+  const category = document.getElementById("CATEGORY").value;
+  const solution = document.getElementById("SOLUTION").value;
+
+  const { data, error } = await supabaseClient
+    .from("base_conocimientos") // Nombre de la tabla
+    .insert([{ report, location, category, solution }]);
+
+  if (error) {
+    console.error("Error al guardar:", error.message);
+    alert("Error al guardar los datos.");
+  } else {
+    console.log("Datos guardados correctamente:", data);
+    alert("Datos guardados exitosamente.");
+    DB_FORM.reset();
+  }
+});

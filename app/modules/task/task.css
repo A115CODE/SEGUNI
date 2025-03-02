@@ -32,12 +32,13 @@
 }
 .task_item {
   background-color: #efefef;
-  margin: 10px 0;
+  margin: 20px 0;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 12px;
+  box-shadow: var(--shadow);
 }
 .txt_item {
   font-size: 90%;

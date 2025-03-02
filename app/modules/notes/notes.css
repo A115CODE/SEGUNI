@@ -73,6 +73,7 @@ textarea:focus {
     align-items: center;
     justify-content: center;
     transition: var(--transition);
+    box-shadow: var(--shadow);
 }
 
 .note_title {

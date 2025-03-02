@@ -100,6 +100,7 @@ async function loadNotes() {
             // Evento para abrir/cerrar la nota
             li.addEventListener("click", function () {
               this.classList.toggle("note_item_open");
+              //this.classList.toggle("otra_clase");
               console.log("Clase agregada dinámicamente a:", this);
             });
   });

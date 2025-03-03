@@ -25,6 +25,8 @@
 #TASK_LIST {
   width: 85%;
   height: 100%;
+  overflow-y: scroll;
+  padding-right: 15px;
 }
 .task_item {
   background-color: var(--bg-items);

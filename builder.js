@@ -15,6 +15,9 @@ function DEPLOY_CSS(URL) {
 DEPLOY_SCRIPT('./app/app.js');
 
 // APPS
+//TIME
+DEPLOY_SCRIPT('./app/modules/time/time.js');
+DEPLOY_CSS('./app/modules/time/time.css');
 //TASKS
 DEPLOY_SCRIPT('./app/modules/task/task.js');
 DEPLOY_CSS('./app/modules/task/task.css');

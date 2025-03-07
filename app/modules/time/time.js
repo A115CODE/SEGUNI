@@ -37,6 +37,11 @@ TIME_FORM_BTN.type = 'submit';
 TIME_FORM_BTN.textContent = 'Agregar';
 TIME_FORM.appendChild(TIME_FORM_BTN);
 
+// LISTA
+const TIME_LIST = document.createElement('ul');
+TIME_LIST.id = 'TIME_LIST';
+TIME_FORM.appendChild(TIME_LIST);
+
 // Save TastTime
 // Evento para guardar el tiempo en Supabase
 TIME_FORM.addEventListener('submit', async (e) => {

@@ -97,6 +97,7 @@ textarea:focus {
     overflow: visible;
     text-overflow: unset;
 }
+
 .note_item_open .note_content {
     display: block;
     width: 100%;

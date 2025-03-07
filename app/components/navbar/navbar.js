@@ -19,4 +19,4 @@ navbarBTNS('HOME_BTN', './assets/home.svg', 'Home');
 navbarBTNS('TIME_BTN', './assets/time.svg', 'Time');
 navbarBTNS('TASK_BTN', './assets/task.svg', 'Task');
 navbarBTNS('NOTES_BTN', './assets/notes.svg', 'Notes');
-navbarBTNS('DATABASE_BTN', './assets/db.svg', 'DataBase');
+navbarBTNS('DATABASE_BTN', './assets/db.svg', 'DB');

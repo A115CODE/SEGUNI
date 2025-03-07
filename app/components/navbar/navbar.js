@@ -15,7 +15,8 @@ function navbarBTNS(ID, SRC, TXT) {
   BUTTON.appendChild(TEXT);
 }
 
-navbarBTNS('HOME_BTN', './assets/home.svg', 'HOME');
-navbarBTNS('TASK_BTN', './assets/task.svg', 'TASK');
-navbarBTNS('NOTES_BTN', './assets/notes.svg', 'NOTES');
-navbarBTNS('DATABASE_BTN', './assets/db.svg', ' DataBase');
+navbarBTNS('HOME_BTN', './assets/home.svg', 'Home');
+navbarBTNS('TIME_BTN', './assets/time.svg', ' Time');
+navbarBTNS('DATABASE_BTN', './assets/db.svg', 'DataBase');
+navbarBTNS('TASK_BTN', './assets/task.svg', 'Task');
+navbarBTNS('NOTES_BTN', './assets/notes.svg', 'Notes');

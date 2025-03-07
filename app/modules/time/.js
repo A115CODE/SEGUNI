@@ -72,33 +72,56 @@ TIME_FORM.addEventListener('submit', async (e) => {
 });
 
 //mostrar datos de la db
-// Función para obtener y mostrar los datos
 async function obtenerTiempos() {
-  // Limpiar la lista antes de agregar nuevos elementos
   TIME_LIST.innerHTML = '';
 
   const { data, error } = await supabaseClient
-  .from('support_time')
-  .select('*');
+    .from('support_time')
+    .select('*');
 
   if (error) {
     console.error('Error al obtener datos:', error.message);
     return;
   }
 
-  // Crear elementos <li> con los datos obtenidos
+  console.log('Datos obtenidos:', data);
+
+  const FECHA_LOCAL = new Date();
+
   data.forEach((item) => {
     const listItem = document.createElement('li');
-    listItem.textContent = `Ticket: ${item.ticket} Hora: ${item.time}`;
+
+    // Convertir la hora guardada en texto a un objeto Date
+    const horaGuardada = new Date();
+    const partesHora = item.time.split(':');
+
+    if (partesHora.length === 3) {
+      const [hora, minutos, segundos] = partesHora.map(Number);
+      horaGuardada.setHours(hora, minutos, segundos);
+
+      // Calcular la diferencia de tiempo en minutos
+      const diferenciaMs = FECHA_LOCAL - horaGuardada;
+      const diferenciaMinutos = Math.floor(diferenciaMs / 60000);
+
+      listItem.textContent = `Ticket: ${item.ticket} | Hora: ${item.time} | Hace ${diferenciaMinutos} min`;
+    } else {
+      listItem.textContent = `Ticket: ${item.ticket} | Hora: ${item.time} (Error de formato)`;
+      console.error('Formato de hora incorrecto en la base de datos:', item.time);
+    }
+
     TIME_LIST.appendChild(listItem);
   });
 }
 
 //Hora actual de update del tiempo
 const FECHA_LOCAL = new Date();
-const HORA_ = FECHA_LOCAL.toLocaleTimeString(); // Solo la hora en formato local
+const HORA_LOCAL = FECHA_LOCAL.toLocaleTimeString(); // Solo la hora en formato local
 
 
 // Cargar datos al iniciar la página
 obtenerTiempos();
 
+
+
+// Cargar datos al iniciar la página
+obtenerTiempos();

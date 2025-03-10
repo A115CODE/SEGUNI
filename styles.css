@@ -60,7 +60,7 @@ button:hover {
 /*1024px pc*/
 @media (min-width: 600px) {
   #DASHBOARD {
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 1fr 10fr;
     grid-template-rows: 0.5fr 6fr;
   }
 }
@@ -69,6 +69,7 @@ button:hover {
     grid-template-columns: 1fr 10fr;
     grid-template-rows: 0.5fr 10fr;
   }
+
 }
 /* Ancho de la barra de scroll */
 ::-webkit-scrollbar {

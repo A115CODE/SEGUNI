@@ -104,8 +104,11 @@ async function cargarTareas() {
       <strong>${tarea.descripcion}</strong><br>
       Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}<br>
       <span class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</span><br>
-      <button onclick="eliminarTarea(${tarea.id})">Eliminar</button>
     `;
+    let btnEliminar = document.createElement('button');
+    btnEliminar.textContent = 'Eliminar';
+    btnEliminar.addEventListener('click', () => eliminarTarea(tarea.id));
+    tareaDiv.appendChild(btnEliminar);
 
     contenedor.appendChild(tareaDiv);
   });
@@ -151,5 +154,6 @@ async function eliminarTarea(id) {
     cargarTareas();
   }
 }
+
 cargarTareas();
 setInterval(cargarTareas, 60000);

@@ -1,0 +1,32 @@
+#TIME {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#guardarBtn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 45px;
+    background-color: var(--seguni-color);
+    color: var(--font-1);
+}
+#tareas {
+  width: 85%;
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 15px;
+}
+
+.tarea {
+    background-color: var(--bg-items);
+    margin: 20px 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}

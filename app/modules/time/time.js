@@ -1,10 +1,9 @@
-// Inicializar Supabase
+// Configuración de Supabase
 const { createClient } = supabase;
-
-const SUPABASE_URL = 'https://dvuqnktmjvotdlnbbnhw.supabase.co';
-const SUPABASE_ANON_KEY =
+const supabaseUrl = 'https://dvuqnktmjvotdlnbbnhw.supabase.co';
+const supabaseKey =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2dXFua3RtanZvdGRsbmJibmh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MTMxNzUsImV4cCI6MjA1NjA4OTE3NX0.NBjk0irYgv23oENmlKSLHJWG6fykfsI8X1hUHrVwT2Y';
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supaBaseTIME = createClient(supabaseUrl, supabaseKey);
 
 const FRAMEAPP = document.getElementById('FRAMEAPP');
 
@@ -22,83 +21,135 @@ const TIME_FORM = document.createElement('form');
 TIME_FORM.id = 'TIME_FORM';
 TIME.appendChild(TIME_FORM);
 
-const FECHA_ACTUAL = new Date();
-const HORA_ACTUAL = FECHA_ACTUAL.toLocaleTimeString(); // Solo la hora en formato local
+const TIME_INPUT = document.createElement("input");
+TIME_INPUT.id = "tareaInput";
+TIME_INPUT.placeholder = "Agregar";
+TIME_FORM.appendChild(TIME_INPUT);
 
-const TIME_FORM_INPUT = document.createElement('input');
-TIME_FORM_INPUT.type = 'text';
-TIME_FORM_INPUT.id = 'TIME_FORM_INPUT';
-TIME_FORM_INPUT.placeholder = 'TICKET...';
-TIME_FORM.appendChild(TIME_FORM_INPUT);
-
-const TIME_FORM_BTN = document.createElement('button');
-TIME_FORM_BTN.id = 'TIME_FORM_BTN';
-TIME_FORM_BTN.type = 'submit';
-TIME_FORM_BTN.textContent = 'Agregar';
-TIME_FORM.appendChild(TIME_FORM_BTN);
+const TIME_BTN = document.createElement("button");
+TIME_BTN.id = "guardarBtn";
+TIME_BTN.type = 'submit';
+TIME_BTN.textContent = 'Agregar';
+TIME_FORM.appendChild(TIME_BTN);
 
 // LISTA
-const TIME_LIST = document.createElement('ul');
-TIME_LIST.id = 'TIME_LIST';
+const TIME_LIST = document.createElement('div');
+TIME_LIST.id = 'tareas';
 TIME.appendChild(TIME_LIST);
 
-// Save TastTime
-// Evento para guardar el tiempo en Supabase
-TIME_FORM.addEventListener('submit', async (e) => {
-  e.preventDefault(); // Evita el recargo de la página
+//LOGICA
 
-  const ITEM_TIMER = TIME_FORM_INPUT.value.trim();
-  if (!ITEM_TIMER) {
-    alert('Por favor, ingrese un ticket.');
-    return;
-  }
-
-  const FECHA_ACTUAL = new Date();
-  const HORA_ACTUAL = FECHA_ACTUAL.toLocaleTimeString(); // Hora actual en formato local
-
-  // Insertar en Supabase
-  const { data, error } = await supabaseClient
-    .from('support_time')
-    .insert([{ ticket: ITEM_TIMER, time: HORA_ACTUAL }]);
-
-  if (error) {
-    console.error('Error al guardar:', error.message);
-    alert('Hubo un error al guardar los datos.');
-  } else {
-    console.log('Guardado correctamente:', data);
-    TIME_FORM_INPUT.value = ''; // Limpiar el input
-    obtenerTiempos();
-  }
+document.getElementById('TIME_FORM').addEventListener('submit', function (event) {
+  event.preventDefault(); // Evita el envío del formulario y el refresco de la página
+  agregarTarea();
 });
 
-//mostrar datos de la db
-// Función para obtener y mostrar los datos
-async function obtenerTiempos() {
-  // Limpiar la lista antes de agregar nuevos elementos
-  TIME_LIST.innerHTML = '';
 
-  const { data, error } = await supabaseClient
-  .from('support_time')
-  .select('*');
-
-  if (error) {
-    console.error('Error al obtener datos:', error.message);
+async function agregarTarea() {
+  let tareaTexto = document.getElementById('tareaInput').value.trim();
+  if (tareaTexto === '') {
+    alert('Por favor, ingresa una tarea.');
     return;
   }
 
-  // Crear elementos <li> con los datos obtenidos
-  data.forEach((item) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `Ticket: ${item.ticket} Hora: ${item.time}`;
-    TIME_LIST.appendChild(listItem);
+  let ahora = new Date();
+  let creadaEn = ahora.toISOString(); // Guardar en formato UTC para compatibilidad con Supabase
+
+  // Insertar en Supabase
+  let { error } = await supaBaseTIME.from('tareas').insert([
+    {
+      descripcion: tareaTexto,
+      creada_en: creadaEn,
+    },
+  ]);
+
+  if (error) {
+    console.error('Error al guardar en Supabase:', error);
+    alert('Hubo un error al guardar la tarea.');
+    return;
+  }
+
+  document.getElementById('tareaInput').value = '';
+  cargarTareas(); // Recargar lista de tareas
+}
+
+async function cargarTareas() {
+  let { data: tareas, error } = await supaBaseTIME.from('tareas').select('*');
+  if (error) {
+    console.error('Error al obtener tareas:', error);
+    return;
+  }
+
+  let contenedor = document.getElementById('tareas');
+  contenedor.innerHTML = '';
+
+  tareas.forEach((tarea) => {
+    let tareaDiv = document.createElement('div');
+    tareaDiv.classList.add('tarea');
+
+    let creadaEnUTC = new Date(tarea.creada_en);
+    let creadaEnLocal = new Date(
+      creadaEnUTC.getTime() + new Date().getTimezoneOffset() * -60000
+    ); // Convertir UTC a local
+
+    let ahora = new Date();
+    let tiempoAtraso = Math.floor((ahora - creadaEnLocal) / 1000); // en segundos
+
+    let horas = Math.floor(tiempoAtraso / 3600);
+    let minutos = Math.floor((tiempoAtraso % 3600) / 60);
+
+    let tiempoTexto = `${horas}h ${minutos}m`; // Sin los segundos
+
+    tareaDiv.innerHTML = `
+      <strong>${tarea.descripcion}</strong><br>
+      Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}<br>
+      <span class="temporizador" style="color: green;">Tiempo transcurrido: ${tiempoTexto}</span><br>
+      <button onclick="eliminarTarea(${tarea.id})">Eliminar</button>
+    `;
+
+    contenedor.appendChild(tareaDiv);
+  });
+
+  actualizarTiempoTranscurrido();
+}
+
+function formatearHora(fechaISO) {
+  let fecha = new Date(fechaISO);
+  return fecha.toLocaleString('es-ES', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'America/Guatemala',
   });
 }
 
-//Hora actual de update del tiempo
-const FECHA_LOCAL = new Date();
-const HORA_ = FECHA_LOCAL.toLocaleTimeString(); // Solo la hora en formato local
+function actualizarTiempoTranscurrido() {
+  document.querySelectorAll('.tiempo-transcurrido').forEach((elemento) => {
+    let creadaEnTexto = elemento.dataset.creacion;
+    if (!creadaEnTexto) return; // Evitar errores si está vacío
 
+    let creadaEn = new Date(creadaEnTexto);
+    if (isNaN(creadaEn)) {
+      console.error('Fecha inválida:', creadaEnTexto);
+      return;
+    }
 
-// Cargar datos al iniciar la página
-obtenerTiempos();
+    let ahora = new Date();
+    let diferencia = Math.floor((ahora - creadaEn) / 1000); // Diferencia en segundos
 
+    let horas = Math.floor(diferencia / 3600);
+    let minutos = Math.floor((diferencia % 3600) / 60);
+
+    elemento.textContent = `Tiempo transcurrido: ${horas}h ${minutos}m`; // Sin segundos
+  });
+}
+
+async function eliminarTarea(id) {
+  let { error } = await supaBaseTIME.from('tareas').delete().match({ id });
+  if (error) {
+    console.error('Error al eliminar la tarea', error);
+  } else {
+    cargarTareas();
+  }
+}
+cargarTareas();
+setInterval(cargarTareas, 60000);

@@ -103,7 +103,7 @@ async function cargarTareas() {
     tareaDiv.innerHTML = `
       <strong>${tarea.descripcion}</strong><br>
       Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}<br>
-      <span class="temporizador" style="color: green;">${tiempoTexto} De: 2h 40m</span><br>
+      <span class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</span><br>
       <button onclick="eliminarTarea(${tarea.id})">Eliminar</button>
     `;
 

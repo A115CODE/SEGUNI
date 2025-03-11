@@ -21,6 +21,7 @@ NOTES.appendChild(NOTES_TXT);
 
 const NOTES_FORM = document.createElement("form");
 NOTES_FORM.id = "NOTES_FORM";
+NOTES_FORM.classList.add("hidden")
 NOTES.appendChild(NOTES_FORM);
 
 const NOTES_INTITLE = document.createElement("input");
@@ -39,10 +40,31 @@ NOTES_BUTTON.type = "submit";
 NOTES_BUTTON.textContent = "Agregar";
 NOTES_FORM.appendChild(NOTES_BUTTON);
 
+const OPEN_FROM = document.createElement("button");
+OPEN_FROM.textContent = "OPEN";
+NOTES.appendChild(OPEN_FROM);
+
+// Al principio, ocultamos el formulario usando la clase "hidden"
+NOTES_FORM.style.display = "none";
+
+// Evento para abrir/cerrar el formulario al hacer clic en el botón
+OPEN_FROM.addEventListener("click", function () {
+  // Alternar la visibilidad del formulario
+  if (NOTES_FORM.style.display === "none") {
+    NOTES_FORM.style.display = "block"; // Mostrar el formulario
+    OPEN_FROM.textContent = "Cerrar Formulario"; // Cambiar texto del botón
+  } else {
+    NOTES_FORM.style.display = "none"; // Ocultar el formulario
+    OPEN_FROM.textContent = "Abrir Formulario"; // Cambiar texto del botón
+  }
+
+  console.log("Formulario visible:", NOTES_FORM.style.display === "block");
+});
 
 const NOTES_LIST = document.createElement("ul");
 NOTES_LIST.id = "NOTES_LIST";
 NOTES.appendChild(NOTES_LIST);
+
 
 let editingNoteId = null; // Para saber si estamos editando una nota existente
 

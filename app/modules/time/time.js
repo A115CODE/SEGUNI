@@ -101,12 +101,13 @@ async function cargarTareas() {
     let tiempoTexto = `${horas}h ${minutos}m`; // Sin los segundos
 
     tareaDiv.innerHTML = `
-      <strong>${tarea.descripcion}</strong><br>
-      Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}<br>
-      <span class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</span><br>
+      <h3>${tarea.descripcion}</h3>
+      <p>Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}</p>
+      <h4 class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</h4>
     `;
     let btnEliminar = document.createElement('button');
     btnEliminar.textContent = 'Eliminar';
+    btnEliminar.classList.add("btnEliminar")
     btnEliminar.addEventListener('click', () => eliminarTarea(tarea.id));
     tareaDiv.appendChild(btnEliminar);
 

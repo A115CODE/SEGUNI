@@ -3,7 +3,7 @@
   --bg-items: #efefef;
   --font-1: #fff;
   --transition: all ease 200ms;
-  --shadow: 3px 3px 10px #0000001f /*#0000003f*/;
+  --shadow: 1px 1px 10px #0000003c /*#0000003f*/;
 }
 * {
   margin: 0;

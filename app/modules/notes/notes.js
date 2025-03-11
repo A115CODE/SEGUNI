@@ -39,6 +39,7 @@ NOTES_BUTTON.type = "submit";
 NOTES_BUTTON.textContent = "Agregar";
 NOTES_FORM.appendChild(NOTES_BUTTON);
 
+
 const NOTES_LIST = document.createElement("ul");
 NOTES_LIST.id = "NOTES_LIST";
 NOTES.appendChild(NOTES_LIST);

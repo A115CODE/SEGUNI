@@ -39,6 +39,10 @@ body {
   visibility: hidden;
   position: absolute;
 }
+.hidden {
+  display: none;
+}
+
 input{
   margin: 5px 0;
   padding: 10px;

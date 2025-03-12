@@ -40,22 +40,23 @@ NOTES_BUTTON.type = "submit";
 NOTES_BUTTON.textContent = "Agregar";
 NOTES_FORM.appendChild(NOTES_BUTTON);
 
-const OPEN_FROM = document.createElement("button");
-OPEN_FROM.textContent = "OPEN";
-NOTES.appendChild(OPEN_FROM);
+const OPEN_FORM = document.createElement("button");
+OPEN_FORM.textContent = "Abrir Formulario";
+OPEN_FORM.id = "OPEN_FORM";
+NOTES.appendChild(OPEN_FORM);
 
 // Al principio, ocultamos el formulario usando la clase "hidden"
 NOTES_FORM.style.display = "none";
 
 // Evento para abrir/cerrar el formulario al hacer clic en el botón
-OPEN_FROM.addEventListener("click", function () {
+OPEN_FORM.addEventListener("click", function () {
   // Alternar la visibilidad del formulario
   if (NOTES_FORM.style.display === "none") {
     NOTES_FORM.style.display = "block"; // Mostrar el formulario
-    OPEN_FROM.textContent = "Cerrar Formulario"; // Cambiar texto del botón
+    OPEN_FORM.textContent = "Cerrar Formulario"; // Cambiar texto del botón
   } else {
     NOTES_FORM.style.display = "none"; // Ocultar el formulario
-    OPEN_FROM.textContent = "Abrir Formulario"; // Cambiar texto del botón
+    OPEN_FORM.textContent = "Abrir Formulario"; // Cambiar texto del botón
   }
 
   console.log("Formulario visible:", NOTES_FORM.style.display === "block");

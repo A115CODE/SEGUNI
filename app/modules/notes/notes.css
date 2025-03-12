@@ -47,6 +47,14 @@ textarea:focus {
     background-color: var(--seguni-color);
     color: var(--font-1);
 }
+#OPEN_FORM{
+    width: 200px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 45px;
+    background-color: var(--seguni-color);
+    color: var(--font-1);
+}
 #NOTES_LIST {
     width: 90%;
     padding: 0 1em 0 0;

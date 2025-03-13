@@ -50,7 +50,6 @@ NOTES.appendChild(OPEN_FORM);
 NOTES_FORM.style.display = "none";
 // Evento para abrir/cerrar el formulario al hacer clic en el botón
 OPEN_FORM.addEventListener("click", function () {
-  // Alternar la visibilidad del formulario
   if (NOTES_FORM.style.display === "none") {
     NOTES_FORM.style.display = "flex"; // Mostrar el formulario
     OPEN_FORM.textContent = "X"; // Cambiar texto del botón

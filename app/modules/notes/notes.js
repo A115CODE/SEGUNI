@@ -41,7 +41,7 @@ NOTES_BUTTON.textContent = "Agregar";
 NOTES_FORM.appendChild(NOTES_BUTTON);
 
 const OPEN_FORM = document.createElement("button");
-OPEN_FORM.textContent = "Abrir Formulario";
+OPEN_FORM.textContent = "+";
 OPEN_FORM.id = "OPEN_FORM";
 NOTES.appendChild(OPEN_FORM);
 
@@ -53,10 +53,10 @@ OPEN_FORM.addEventListener("click", function () {
   // Alternar la visibilidad del formulario
   if (NOTES_FORM.style.display === "none") {
     NOTES_FORM.style.display = "block"; // Mostrar el formulario
-    OPEN_FORM.textContent = "Cerrar Formulario"; // Cambiar texto del botón
+    OPEN_FORM.textContent = "X"; // Cambiar texto del botón
   } else {
     NOTES_FORM.style.display = "none"; // Ocultar el formulario
-    OPEN_FORM.textContent = "Abrir Formulario"; // Cambiar texto del botón
+    OPEN_FORM.textContent = "+"; // Cambiar texto del botón
   }
 
   console.log("Formulario visible:", NOTES_FORM.style.display === "block");
@@ -101,23 +101,27 @@ async function loadNotes() {
     li.appendChild(buttons);
 
     const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = `<img src="../../../assets/delete.svg" />`;
     deleteButton.classList.add("btn_li");
     deleteButton.addEventListener("click", async () => {
       await deleteNote(note.id);
     });
     buttons.appendChild(deleteButton);
+    const imgDelete = document.createElement("img");
+    imgDelete.src = "../../../assets/delete.svg";
+    deleteButton.appendChild(imgDelete);
 
     const editButton = document.createElement("button");
-    editButton.innerHTML = `<img src="../../../assets/edit.svg" />`;
     editButton.classList.add("btn_li");
     editButton.addEventListener("click", () => {
       NOTES_INTITLE.value = note.title;
       NOTES_TXTAREA.value = note.content;
-      NOTES_BUTTON.textContent = "Actualizar";
+      NOTES_BUTTON.textContent = "Actualizar"; 
       editingNoteId = note.id;
     });
     buttons.appendChild(editButton);
+    const imgEdit = document.createElement("img");
+    imgEdit.src = "../../../assets/edit.svg";
+    editButton.appendChild(imgEdit);
 
     NOTES_LIST.appendChild(li);
 

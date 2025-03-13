@@ -39,6 +39,28 @@ const LIST = document.createElement('ul');
 LIST.id = 'TASK_LIST';
 TASK.appendChild(LIST);
 
+const OPEN_FORM_TASK = document.createElement("button");
+OPEN_FORM_TASK.textContent = "+";
+OPEN_FORM_TASK.id = "OPEN_FORM_TASK";
+TASK.appendChild(OPEN_FORM_TASK);
+
+//Logica para abrir y cerrar los forms de las apps
+// Al principio, ocultamos el formulario usando la clase "hidden"
+FORM.style.display = "none";
+// Evento para abrir/cerrar el formulario al hacer clic en el botón
+OPEN_FORM_TASK.addEventListener("click", function () {
+  // Alternar la visibilidad del formulario
+  if (FORM.style.display === "none") {
+    FORM.style.display = "block"; // Mostrar el formulario
+    OPEN_FORM_TASK.textContent = "X"; // Cambiar texto del botón
+  } else {
+    FORM.style.display = "none"; // Ocultar el formulario
+    OPEN_FORM_TASK.textContent = "+"; // Cambiar texto del botón
+  }
+
+  console.log("Formulario visible:", FORM.style.display === "block");
+});
+
 // Función para obtener tareas desde Supabase
 async function fetchTasks() {
   const { data, error } = await supabaseClient.from('tasks').select('*');

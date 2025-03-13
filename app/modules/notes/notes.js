@@ -45,9 +45,9 @@ OPEN_FORM.textContent = "+";
 OPEN_FORM.id = "OPEN_FORM";
 NOTES.appendChild(OPEN_FORM);
 
+//Logica para abrir y cerrar los forms de las apps
 // Al principio, ocultamos el formulario usando la clase "hidden"
 NOTES_FORM.style.display = "none";
-
 // Evento para abrir/cerrar el formulario al hacer clic en el botón
 OPEN_FORM.addEventListener("click", function () {
   // Alternar la visibilidad del formulario

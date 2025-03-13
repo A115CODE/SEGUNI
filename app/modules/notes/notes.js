@@ -52,7 +52,7 @@ NOTES_FORM.style.display = "none";
 OPEN_FORM.addEventListener("click", function () {
   // Alternar la visibilidad del formulario
   if (NOTES_FORM.style.display === "none") {
-    NOTES_FORM.style.display = "block"; // Mostrar el formulario
+    NOTES_FORM.style.display = "flex"; // Mostrar el formulario
     OPEN_FORM.textContent = "X"; // Cambiar texto del botón
   } else {
     NOTES_FORM.style.display = "none"; // Ocultar el formulario

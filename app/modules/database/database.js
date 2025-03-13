@@ -53,6 +53,28 @@ const DATA_LIST = document.createElement("ul");
 DATA_LIST.id = "DATA_LIST";
 DATA.appendChild(DATA_LIST);
 
+const OPEN_FORM_DB = document.createElement("button");
+OPEN_FORM_DB.textContent = "+";
+OPEN_FORM_DB.id = "OPEN_FORM_DB";
+DATA.appendChild(OPEN_FORM_DB);
+
+//Logica para abrir y cerrar los forms de las apps
+// Al principio, ocultamos el formulario usando la clase "hidden"
+DATA_FORM.style.display = "none";
+// Evento para abrir/cerrar el formulario al hacer clic en el botón
+OPEN_FORM_DB.addEventListener("click", function () {
+  // Alternar la visibilidad del formulario
+  if (DATA_FORM.style.display === "none") {
+    DATA_FORM.style.display = "flex"; // Mostrar el formulario
+    OPEN_FORM_DB.textContent = "X"; // Cambiar texto del botón
+  } else {
+    DATA_FORM.style.display = "none"; // Ocultar el formulario
+    OPEN_FORM_DB.textContent = "+"; // Cambiar texto del botón
+  }
+
+  console.log("Formulario visible:", DATA_FORM.style.display === "block");
+});
+
 // DB SupaBase
 // Captura el formulario
 const DB_FORM = document.getElementById("DATA_FORM");
@@ -98,9 +120,9 @@ async function fetchData() {
         const listItem = document.createElement("li");
         listItem.classList.add("data_base_item");
         listItem.innerHTML = `
-          <strong>Reporte:</strong> ${item.report} <br>
-          <strong>Área:</strong> ${item.location} <br>
-          <strong>Categoría:</strong> ${item.category} <br>
+          <strong>Reporte:</strong> ${item.report} <br> <br>
+          <strong>Área:</strong> ${item.location} <br> <br>
+          <strong>Categoría:</strong> ${item.category} <br> <br>
           <strong>Solución:</strong> ${item.solution} <br>
         `;
         DATA_LIST.appendChild(listItem);

@@ -41,3 +41,20 @@
     box-shadow: var(--shadow);
     list-style: none;
 }
+
+#OPEN_FORM_DB{
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    font-size: 1.5em;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--seguni-color);
+    color: var(--font-1);
+}

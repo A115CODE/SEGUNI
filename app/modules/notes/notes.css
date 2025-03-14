@@ -64,7 +64,7 @@ textarea:focus {
     color: var(--font-1);
 }
 #NOTES_LIST {
-    width: 90%;
+    width: auto;
     padding: 0 1em 0 0;
     text-align: left;
     display: flex;

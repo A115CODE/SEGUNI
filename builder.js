@@ -12,7 +12,7 @@ function DEPLOY_CSS(URL) {
 }
 
 // APP
-DEPLOY_SCRIPT('./app/app.js');
+DEPLOY_SCRIPT('../app/app.js');
 
 // APPS
 //TIME

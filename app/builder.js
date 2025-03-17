@@ -17,7 +17,7 @@ DEPLOY_SCRIPT('./app.js');
 // APPS
 //TIME
 DEPLOY_SCRIPT('./modules/time/time.js');
-DEPLOY_CSS('./app/modules/time/time.css');
+DEPLOY_CSS('./modules/time/time.css');
 //TASKS
 DEPLOY_SCRIPT('./modules/task/task.js');
 DEPLOY_CSS('./modules/task/task.css');
@@ -33,10 +33,10 @@ DEPLOY_CSS('./modules/dashboard/dashboard.css');
 
 // COMPONENTS
 //  Navbar
-DEPLOY_SCRIPT('./app/components/navbar/navbar.js');
-DEPLOY_SCRIPT('./app/components/navbar/controller.js');
-DEPLOY_CSS('./app/components/navbar/navbar.css');
+DEPLOY_SCRIPT('./components/navbar/navbar.js');
+DEPLOY_SCRIPT('./components/navbar/controller.js');
+DEPLOY_CSS('./components/navbar/navbar.css');
 
 //  Header
-DEPLOY_SCRIPT('./app/components/header/header.js');
-DEPLOY_CSS('./app/components/header/header.css');
+DEPLOY_SCRIPT('./components/header/header.js');
+DEPLOY_CSS('./components/header/header.css');

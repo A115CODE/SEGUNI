@@ -7,5 +7,5 @@ function headerBUTTONS(ID, SRC) {
   HEADER.appendChild(IMG);
 }
 
-headerBUTTONS('LOGO', './assets/logo.png');
-headerBUTTONS('SINGOUT', './assets/out.svg');
+headerBUTTONS('LOGO', '../assets/logo.png');
+headerBUTTONS('SINGOUT', '../assets/out.svg');

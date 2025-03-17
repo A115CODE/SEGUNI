@@ -12,24 +12,24 @@ function DEPLOY_CSS(URL) {
 }
 
 // APP
-DEPLOY_SCRIPT('../app/app.js');
+DEPLOY_SCRIPT('./app.js');
 
 // APPS
 //TIME
-DEPLOY_SCRIPT('./app/modules/time/time.js');
+DEPLOY_SCRIPT('./modules/time/time.js');
 DEPLOY_CSS('./app/modules/time/time.css');
 //TASKS
-DEPLOY_SCRIPT('./app/modules/task/task.js');
-DEPLOY_CSS('./app/modules/task/task.css');
+DEPLOY_SCRIPT('./modules/task/task.js');
+DEPLOY_CSS('./modules/task/task.css');
 //NOTES
-DEPLOY_SCRIPT('./app/modules/notes/notes.js');
-DEPLOY_CSS('./app/modules/notes/notes.css');
+DEPLOY_SCRIPT('./modules/notes/notes.js');
+DEPLOY_CSS('./modules/notes/notes.css');
 //DATABASE
-DEPLOY_SCRIPT('./app/modules/database/database.js');
-DEPLOY_CSS('./app/modules/database/database.css');
+DEPLOY_SCRIPT('./modules/database/database.js');
+DEPLOY_CSS('./modules/database/database.css');
 //DASHBOARD
-DEPLOY_SCRIPT('./app/modules/dashboard/dashboard.js');
-DEPLOY_CSS('./app/modules/dashboard/dashboard.css');
+DEPLOY_SCRIPT('./modules/dashboard/dashboard.js');
+DEPLOY_CSS('./modules/dashboard/dashboard.css');
 
 // COMPONENTS
 //  Navbar

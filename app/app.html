@@ -6,9 +6,30 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="./app.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   </head>
   <body>
-    <script type="module" src="./builder.js"></script>
+    <script>
+      const aut = supabase.createClient(
+        "https://dvuqnktmjvotdlnbbnhw.supabase.co", 
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2dXFua3RtanZvdGRsbmJibmh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MTMxNzUsImV4cCI6MjA1NjA4OTE3NX0.NBjk0irYgv23oENmlKSLHJWG6fykfsI8X1hUHrVwT2Y"
+      );
+
+      async function checkAuth() {
+        const { data: { session } } = await aut.auth.getSession();
+        
+        if (session) {
+          // Usuario autenticado, cargar el script
+          const script = document.createElement("script");
+          script.type = "module";
+          script.src = "./builder.js";
+          document.body.appendChild(script);
+        } else {
+          // Usuario no autenticado, ocultar contenido o redirigir
+          document.body.innerHTML = "<h1>Acceso no autorizado</h1>";
+        }
+      }
+
+      checkAuth();
+    </script>
   </body>
 </html>

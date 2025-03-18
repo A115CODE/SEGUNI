@@ -1,0 +1,22 @@
+body {
+    text-align: center;
+}
+#loginForm{
+    position: fixed;
+    top: 20%;
+    box-shadow: var(--shadow);
+    width: 40%;
+    height: 40vh;
+    border-radius: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 45px;
+    background-color: var(--seguni-color);
+    color: var(--font-1);
+}

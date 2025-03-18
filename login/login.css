@@ -8,8 +8,6 @@ body {
     right: 20%;
     left: 20%;
     box-shadow: var(--shadow);
-    width: 40%;
-    height: 40vh;
     border-radius: 45px;
     display: flex;
     flex-direction: column;

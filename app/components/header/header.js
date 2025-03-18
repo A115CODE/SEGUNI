@@ -1,7 +1,4 @@
-
-  console.log("Documento cargado"); // Verifica que el evento se ejecuta
-
-  const HEADER = document.getElementById("HEADER");
+const HEADER = document.getElementById("HEADER");
 
   function headerBUTTONS(ID, SRC, isButton = false) {
     if (isButton) {

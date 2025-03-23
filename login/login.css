@@ -1,14 +1,16 @@
 body {
     text-align: center;
 }
+h2{
+    color: var(--seguni-color);
+    margin: 10px 0;
+}
 #loginForm{
     position: fixed;
     top: 20%;
     bottom: 20%;
     right: 20%;
     left: 20%;
-    box-shadow: var(--shadow);
-    border-radius: 45px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,10 +18,11 @@ body {
 }
 input{
     width: 75%;
-    margin: 5px 0;
+    margin: 10px 0;
     padding: 10px;
   }
 button {
+    margin-top: 15px;
     padding: 10px 15px;
     border: none;
     border-radius: 45px;

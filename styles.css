@@ -1,9 +1,10 @@
 :root {
   --seguni-color: #00457d;
-  --bg-items: #efefef;
+  --bg-items: #fefefe;
   --font-1: #fff;
   --transition: all ease 200ms;
-  --shadow: 1px 1px 10px #0000003c /*#0000003f*/;
+  --shadow: 5px 5px 10px #bfbfbf,
+  -5px -5px 10px #ffffff;
 }
 * {
   margin: 0;

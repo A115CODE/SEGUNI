@@ -4,8 +4,8 @@
   --bg-items: #fefefe;
   --font-1: #fff;
   --transition: all ease 200ms;
-  --shadow: 5px 5px 10px #bfbfbf,
-  -5px -5px 10px #ffffff;
+  --shadow: 3px 3px 8px #bfbfbf,
+  -3px -3px 8px #ffffff;
 }
 * {
   margin: 0;

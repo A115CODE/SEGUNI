@@ -39,6 +39,7 @@
   box-shadow: var(--shadow);
 }
 .txt_item {
+  font-weight: lighter;
   font-size: 90%;
   letter-spacing: 0;
 }

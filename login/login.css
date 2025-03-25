@@ -30,7 +30,7 @@ input{
     padding: 10px;
   }
 button {
-    padding: 10px 15px;
+    padding: 0px 15px;
     border: none;
     border-radius: 45px;
     background-color: var(--seguni-color);
@@ -39,5 +39,6 @@ button {
     align-items: center;
 }
 button img{
+    margin-right: 5px;
     width: 20%;
 }

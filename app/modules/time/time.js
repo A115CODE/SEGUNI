@@ -101,9 +101,9 @@ async function cargarTareas() {
     let tiempoTexto = `${horas}h ${minutos}m`; // Sin los segundos
 
     tareaDiv.innerHTML = `
-      <h3>${tarea.descripcion}</h3>
-      <p>Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}</p>
-      <h4 class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</h4>
+      <h4 class="item_description">${tarea.descripcion}</h4>
+      <p class="item_date">Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}</p>
+      <h5 class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</h5>
     `;
     let btnEliminar = document.createElement('button');
     btnEliminar.textContent = 'Eliminar';

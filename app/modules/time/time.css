@@ -33,6 +33,14 @@
     border-radius: 12px;
     box-shadow: var(--shadow);
 }
+.item_description{
+    font-size: 100%;
+    font-weight: lighter;
+}
+.item_date{
+    font-size: 80%;
+    font-weight: lighter;
+}
 .btnEliminar{
     padding: 5px 10px;
     margin: 0 0 0 10px;

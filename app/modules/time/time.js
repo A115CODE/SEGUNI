@@ -90,7 +90,7 @@ async function cargarTareas() {
     let creadaEnUTC = new Date(tarea.creada_en);
     let creadaEnLocal = new Date(
       creadaEnUTC.getTime() + new Date().getTimezoneOffset() * -60000
-    ); // Convertir UTC a local
+    );
 
     let ahora = new Date();
     let tiempoAtraso = Math.floor((ahora - creadaEnLocal) / 1000); // en segundos
@@ -102,7 +102,7 @@ async function cargarTareas() {
 
     tareaDiv.innerHTML = `
       <h4 class="item_description">${tarea.descripcion}</h4>
-      <p class="item_date">Guardado a las: ${formatearHora(creadaEnLocal.toISOString())}</p>
+      <p class="item_date">Guardado a las: <span style="color: green; font-weight: bold;">${formatearHora(creadaEnLocal.toISOString())}</span></p>
       <h5 class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</h5>
     `;
     let btnEliminar = document.createElement('button');

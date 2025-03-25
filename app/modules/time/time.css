@@ -13,7 +13,7 @@
     color: var(--font-1);
 }
 #tareas {
-  width: 85%;
+  width: auto;
   height: 100%;
   overflow-y: scroll;
   padding-right: 15px;

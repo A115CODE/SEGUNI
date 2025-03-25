@@ -1,6 +1,7 @@
 body {
     text-align: center;
     font-family: "Merriweather Sans";
+    background-color: var(--bg); /*fafafa*/
 }
 img{
     width: 40%;

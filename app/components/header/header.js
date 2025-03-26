@@ -43,7 +43,7 @@ const HEADER = document.getElementById("HEADER");
       const { error } = await hola.auth.signOut();
       if (!error) {
         console.log("Sesión cerrada con éxito");
-        window.location.href = "../../login/login.html";
+        window.location.href = "https://a115code.github.io/SEGUNI/login/login.html";
       } else {
         console.error("Error al cerrar sesión:", error);
       }

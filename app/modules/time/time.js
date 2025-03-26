@@ -74,7 +74,11 @@ async function agregarTarea() {
 }
 
 async function cargarTareas() {
-  let { data: tareas, error } = await supaBaseTIME.from('tareas').select('*');
+  let { data: tareas, error } = await supaBaseTIME
+    .from('tareas')
+    .select('*')
+    .order('creada_en', { ascending: false });
+
   if (error) {
     console.error('Error al obtener tareas:', error);
     return;
@@ -105,9 +109,10 @@ async function cargarTareas() {
       <p class="item_date">Guardado a las: <span style="color: green; font-weight: bold;">${formatearHora(creadaEnLocal.toISOString())}</span></p>
       <h5 class="temporizador" style="color: red;">${tiempoTexto} De: 2h 40m</h5>
     `;
+    
     let btnEliminar = document.createElement('button');
     btnEliminar.textContent = 'Eliminar';
-    btnEliminar.classList.add("btnEliminar")
+    btnEliminar.classList.add("btnEliminar");
     btnEliminar.addEventListener('click', () => eliminarTarea(tarea.id));
     tareaDiv.appendChild(btnEliminar);
 

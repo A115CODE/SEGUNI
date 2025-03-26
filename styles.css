@@ -70,13 +70,30 @@ button:hover {
     grid-template-columns: 1fr 10fr;
     grid-template-rows: 0.5fr 6fr;
   }
+  #IMG_LOGIN{
+    width: 10%;
+  }
+  #NAVBAR {
+    width: 60%;
+  }
 }
 @media (min-width: 1024px) {
   #DASHBOARD {
     grid-template-columns: 1fr 10fr;
     grid-template-rows: 0.5fr 10fr;
   }
-
+  #NAVBAR {
+    width: 70%;
+  }
+}
+@media (min-width: 1600px) {
+  #DASHBOARD {
+    grid-template-columns: 1fr 10fr;
+    grid-template-rows: 0.5fr 10fr;
+  }
+  #NAVBAR {
+    width: 40%;
+  }
 }
 /* Ancho de la barra de scroll */
 ::-webkit-scrollbar {

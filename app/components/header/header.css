@@ -12,11 +12,11 @@
 }
 @media (min-width: 600px) {
   #LOGO {
-    width: 20%;
+    width: 15%;
   }
 }
 @media (min-width: 1024px) {
   #LOGO {
-    width: 15%;
+    width: 10%;
   }
 }

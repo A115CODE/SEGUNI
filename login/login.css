@@ -3,8 +3,8 @@ body {
     font-family: "Merriweather Sans";
     background-color: var(--bg); /*fafafa*/
 }
-img{
-    width: 40%;
+#IMG_LOGIN{
+    width: 35%;
     margin: 10px 0;
 }
 h3{
@@ -13,8 +13,8 @@ h3{
 }
 #loginForm{
     position: fixed;
-    top: 30%;
-    bottom: 30%;
+    top: 20%;
+    bottom: 20%;
     right: 20%;
     left: 20%;
     display: flex;
@@ -43,3 +43,16 @@ button img{
     margin-right: 5px;
     width: 20%;
 }
+/*1024px pc*/
+@media (min-width: 600px) {
+    #IMG_LOGIN{
+      width: 20%;
+    }
+    #loginForm{
+        left: 30%;
+        right: 30%;
+    }
+    button {
+        padding: 15px;
+    }
+  }

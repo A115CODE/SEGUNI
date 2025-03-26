@@ -31,7 +31,7 @@ input{
     padding: 10px;
   }
 button {
-    padding: 0px 15px;
+    padding: 10px 15px;
     border: none;
     border-radius: 45px;
     background-color: var(--seguni-color);

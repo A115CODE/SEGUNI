@@ -41,6 +41,11 @@
     box-shadow: var(--shadow);
     list-style: none;
 }
+.data_item {
+    font-weight: lighter;
+    padding: 10px 0;
+    color: rgb(106, 106, 106);
+}
 
 #OPEN_FORM_DB{
     width: 40px;

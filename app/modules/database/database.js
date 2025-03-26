@@ -120,10 +120,10 @@ async function fetchData() {
         const listItem = document.createElement("li");
         listItem.classList.add("data_base_item");
         listItem.innerHTML = `
-          <strong>Reporte:</strong> ${item.report} <br> <br>
-          <strong>Área:</strong> ${item.location} <br> <br>
-          <strong>Categoría:</strong> ${item.category} <br> <br>
-          <strong>Solución:</strong> ${item.solution} <br>
+          <strong>Reporte:</strong> <p class="data_item">${item.report}</p>
+          <strong>Área:</strong> <p class="data_item">${item.location}</p>
+          <strong>Categoría:</strong> <p class="data_item">${item.category}</p>
+          <strong>Solución:</strong> <p class="data_item">${item.solution}</p>
         `;
         DATA_LIST.appendChild(listItem);
       });

@@ -69,9 +69,26 @@ NOTES.appendChild(NOTES_LIST);
 let editingNoteId = null; // Para saber si estamos editando una nota existente
 
 async function loadNotes() {
+  // Obtener el usuario autenticado
+  const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+  
+  if (authError) {
+    console.error("Error al obtener el usuario:", authError.message);
+    return;
+  }
+
+  if (!user) {
+    console.error("No hay usuario autenticado");
+    return;
+  }
+
+  const email = user.email; // Email del usuario actual
+
+  // Obtener solo las notas del usuario autenticado
   const { data, error } = await supabaseClient
     .from("notes")
-    .select("id, title, content, created_at")
+    .select("id, title, content, created_at") // Ya no necesitamos el email en la selección
+    .eq("email", email) // Filtrar por email del usuario actual
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -126,14 +143,15 @@ async function loadNotes() {
 
     NOTES_LIST.appendChild(li);
 
-            // Evento para abrir/cerrar la nota
-            li.addEventListener("click", function () {
-              this.classList.toggle("note_item_open");
-              //this.classList.toggle("otra_clase");
-              console.log("Clase agregada dinámicamente a:", this);
-            });
+    // Evento para abrir/cerrar la nota
+    li.addEventListener("click", function () {
+      this.classList.toggle("note_item_open");
+      console.log("Clase agregada dinámicamente a:", this);
+    });
   });
 }
+
+
 
 async function deleteNote(noteId) {
   const { error } = await supabaseClient.from("notes").delete().eq("id", noteId);
@@ -150,10 +168,25 @@ NOTES_FORM.addEventListener("submit", async (event) => {
   const content = NOTES_TXTAREA.value.trim();
   if (!content) return;
 
+  // Obtener el usuario autenticado
+  const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+
+  if (authError) {
+    console.error("Error al obtener el usuario:", authError.message);
+    return;
+  }
+
+  if (!user) {
+    console.error("No hay usuario autenticado");
+    return;
+  }
+
+  const email = user.email; // Obtener el email del usuario
+
   if (editingNoteId) {
     const { error } = await supabaseClient
       .from("notes")
-      .update({ title, content })
+      .update({ title, content, email }) // Agregar el email en la actualización
       .eq("id", editingNoteId);
 
     if (error) {
@@ -163,7 +196,7 @@ NOTES_FORM.addEventListener("submit", async (event) => {
     editingNoteId = null;
     NOTES_BUTTON.textContent = "Agregar";
   } else {
-    const { error } = await supabaseClient.from("notes").insert([{ title, content }]);
+    const { error } = await supabaseClient.from("notes").insert([{ title, content, email }]); // Agregar el email en la inserción
     if (error) {
       console.error("Error al guardar la nota:", error.message);
       return;
@@ -174,5 +207,6 @@ NOTES_FORM.addEventListener("submit", async (event) => {
   NOTES_TXTAREA.value = "";
   loadNotes();
 });
+
 
 loadNotes();

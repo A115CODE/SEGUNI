@@ -137,7 +137,7 @@ async function loadNotes() {
     });
     buttons.appendChild(editButton);
     const imgEdit = document.createElement("img");
-    imgEdit.src = "../../assets/edit.svg";
+    imgEdit.src = "..../assets/edit.svg";
     imgEdit.alt = "Edit";
     editButton.appendChild(imgEdit);
 

@@ -16,8 +16,11 @@
     color: var(--font-1);
 }
 #tareas {
-  width: auto;
-  height: 100%;
+  position: fixed;
+  top: 20%;
+  bottom: 0%;
+  left: 13%;
+  right: 0%;
   overflow-y: scroll;
   padding-right: 15px;
   display: flex;
@@ -56,3 +59,8 @@
     background-color: var(--seguni-color);
     color: var(--font-1);
 }
+@media (min-width: 1024px) {
+    #tareas {
+        left: 5%;
+    }
+  }

@@ -55,11 +55,23 @@ async function agregarTarea() {
   let ahora = new Date();
   let creadaEn = ahora.toISOString(); // Guardar en formato UTC para compatibilidad con Supabase
 
+  // Obtener el email del usuario autenticado
+  const { data: { user }, error: authError } = await supaBaseTIME.auth.getUser();
+
+  if (authError || !user) {
+    console.error('Error obteniendo el usuario:', authError);
+    alert('No se pudo obtener la sesión del usuario.');
+    return;
+  }
+
+  let emailUsuario = user.email;
+
   // Insertar en Supabase
   let { error } = await supaBaseTIME.from('tareas').insert([
     {
       descripcion: tareaTexto,
       creada_en: creadaEn,
+      email: emailUsuario, // Agregar email
     },
   ]);
 
@@ -73,10 +85,24 @@ async function agregarTarea() {
   cargarTareas(); // Recargar lista de tareas
 }
 
+
 async function cargarTareas() {
+  // Obtener el usuario autenticado
+  const { data: { user }, error: authError } = await supaBaseTIME.auth.getUser();
+
+  if (authError || !user) {
+    console.error('Error obteniendo el usuario:', authError);
+    alert('No se pudo obtener la sesión del usuario.');
+    return;
+  }
+
+  let emailUsuario = user.email;
+
+  // Obtener las tareas filtradas por el email del usuario
   let { data: tareas, error } = await supaBaseTIME
     .from('tareas')
     .select('*')
+    .eq('email', emailUsuario) // Filtrar por el email del usuario
     .order('creada_en', { ascending: false });
 
   if (error) {
@@ -121,6 +147,7 @@ async function cargarTareas() {
 
   actualizarTiempoTranscurrido();
 }
+
 
 function formatearHora(fechaISO) {
   let fecha = new Date(fechaISO);

@@ -123,7 +123,7 @@ async function loadNotes() {
     });
     buttons.appendChild(deleteButton);
     const imgDelete = document.createElement("img");
-    imgDelete.src = "../../assets/delete.svg";
+    imgDelete.src = "../assets/delete.svg";
     imgDelete.alt = "Delete";
     deleteButton.appendChild(imgDelete);
 

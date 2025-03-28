@@ -62,14 +62,30 @@ OPEN_FORM_TASK.addEventListener("click", function () {
 });
 
 // Función para obtener tareas desde Supabase
+// Función para obtener y filtrar tareas por email
 async function fetchTasks() {
-  const { data, error } = await supabaseClient.from('tasks').select('*');
+  // Obtener el usuario autenticado
+  const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+  
+  if (authError || !user) {
+    console.error('Error obteniendo usuario:', authError);
+    return;
+  }
+
+  // Obtener tareas filtradas por email del usuario
+  const { data, error } = await supabaseClient
+    .from('tasks')
+    .select('*')
+    .eq('email', user.email); // Filtrar por email
+
   if (error) {
     console.error('Error obteniendo tareas:', error);
     return;
   }
-  renderTasks(data);
+
+  renderTasks(data); // Renderizar tareas en el DOM
 }
+
 
 // Función para renderizar tareas en el DOM
 function renderTasks(tasks) {
@@ -89,34 +105,60 @@ function renderTasks(tasks) {
 FORM.addEventListener('submit', async (e) => {
   e.preventDefault();
   const taskText = INPUT.value.trim();
+  
   if (taskText !== '') {
+    // Obtener el usuario autenticado
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    
+    if (authError || !user) {
+      console.error('Error obteniendo usuario:', authError);
+      return;
+    }
+    
     const { data, error } = await supabaseClient
       .from('tasks')
-      .insert([{ text: taskText }]);
+      .insert([{ text: taskText, email: user.email }]); // Guardar email del usuario
+    
     if (error) {
       console.error('Error agregando tarea:', error);
       return;
     }
+    
     fetchTasks(); // Recargar tareas desde Supabase
     INPUT.value = ''; // Limpiar input
   }
 });
 
+
 // Evento para eliminar tareas
 LIST.addEventListener('click', async (e) => {
   if (e.target.tagName === 'BUTTON') {
     const taskId = e.target.getAttribute('data-id');
+
+    // Obtener el usuario autenticado
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    
+    if (authError || !user) {
+      console.error('Error obteniendo usuario:', authError);
+      return;
+    }
+
+    // Eliminar solo si el email del usuario coincide con el de la tarea
     const { error } = await supabaseClient
       .from('tasks')
       .delete()
-      .eq('id', taskId);
+      .eq('id', taskId)
+      .eq('email', user.email); // Asegurar que el usuario solo borre sus propias tareas
+
     if (error) {
       console.error('Error eliminando tarea:', error);
       return;
     }
-    fetchTasks(); // Recargar lista después de eliminar
+
+    fetchTasks(); // Recargar lista después de eliminar
   }
 });
+
 
 // Cargar tareas al inicio
 fetchTasks();

@@ -123,7 +123,7 @@ async function loadNotes() {
     });
     buttons.appendChild(deleteButton);
     const imgDelete = document.createElement("img");
-    imgDelete.src = "../../../assets/delete.svg";
+    imgDelete.src = "../../assets/delete.svg";
     imgDelete.alt = "Delete";
     deleteButton.appendChild(imgDelete);
 
@@ -137,7 +137,7 @@ async function loadNotes() {
     });
     buttons.appendChild(editButton);
     const imgEdit = document.createElement("img");
-    imgEdit.src = "..../assets/edit.svg";
+    imgEdit.src = "../assets/edit.svg";
     imgEdit.alt = "Edit";
     editButton.appendChild(imgEdit);
 

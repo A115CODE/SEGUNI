@@ -13,6 +13,8 @@
   </head>
   <body>
     <script>
+      window.onload = function() {
+        
       const aut = supabase.createClient(
         "https://dvuqnktmjvotdlnbbnhw.supabase.co", 
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2dXFua3RtanZvdGRsbmJibmh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MTMxNzUsImV4cCI6MjA1NjA4OTE3NX0.NBjk0irYgv23oENmlKSLHJWG6fykfsI8X1hUHrVwT2Y"
@@ -52,6 +54,7 @@
       }
     
       checkAuth();
+    };
     </script>
   </body>
 </html>

@@ -17,21 +17,40 @@
         "https://dvuqnktmjvotdlnbbnhw.supabase.co", 
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2dXFua3RtanZvdGRsbmJibmh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MTMxNzUsImV4cCI6MjA1NjA4OTE3NX0.NBjk0irYgv23oENmlKSLHJWG6fykfsI8X1hUHrVwT2Y"
       );
-
+    
+      let logoutTimer;
+    
       async function checkAuth() {
         const { data: { session } } = await aut.auth.getSession();
         
         if (session) {
-          // Usuario autenticado, cargar el script
+          // Usuario autenticado, cargar el script y configurar temporizador
           const script = document.createElement("script");
           script.type = "module";
           script.src = "./builder.js";
           document.body.appendChild(script);
+          
+          resetTimer();
+          document.addEventListener("mousemove", resetTimer);
+          document.addEventListener("keydown", resetTimer);
+          document.addEventListener("scroll", resetTimer);
         } else {
-          // Usuario no autenticado, ocultar contenido o redirigir
-          document.body.innerHTML = "<h1>No tas actorizado weee jajaja XD</h1>";
+          // Usuario no autenticado
+          document.body.innerHTML = "<h1>No tas autorizado weee jajaja XD</h1>";
         }
       }
+    
+      function resetTimer() {
+        clearTimeout(logoutTimer);
+        logoutTimer = setTimeout(logoutUser, 1200000); // 20 minutos (20 * 60 * 1000)
+      }
+    
+      async function logoutUser() {
+        await aut.auth.signOut();
+        alert("Sesión cerrada por inactividad");
+        window.location.href = "/login.html"; // Cambia esto por tu página de login
+      }
+    
       checkAuth();
     </script>
   </body>

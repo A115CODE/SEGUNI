@@ -51,6 +51,8 @@ button img{
     #loginForm{
         left: 30%;
         right: 30%;
+        top: 30%;
+        bottom: 30%;
     }
     button {
         padding: 15px;

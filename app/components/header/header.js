@@ -25,6 +25,7 @@ const HEADER = document.getElementById("HEADER");
   // Crear los botones
   headerBUTTONS("LOGO", "../assets/logo.png");
   headerBUTTONS("LOG_OUT", "../assets/out.svg", true); // Esto lo convierte en botón
+  headerBUTTONS("RELOAD", "../assets/reload.svg", true); // Esto lo convierte en botón
 
   // Inicializar Supabase
   const hola = supabase.createClient(

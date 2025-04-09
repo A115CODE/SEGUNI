@@ -13,14 +13,3 @@ DASHBOARD.appendChild(HEADER);
 const FRAMEAPP = document.createElement('div');
 FRAMEAPP.id = 'FRAMEAPP';
 DASHBOARD.appendChild(FRAMEAPP);
-
-// app.js
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(function(registration) {
-        console.log('Service Worker registrado:', registration);
-      })
-      .catch(function(error) {
-        console.log('Error al registrar el Service Worker:', error);
-      });
-  }

@@ -3,4 +3,4 @@ self.addEventListener('install', (e) => {
   console.log('Service Worker instalado');
 });
 
-self.addEventListener('fetch', () => {}); // No intercepta nada
+self.addEventListener('fetch', () => {});

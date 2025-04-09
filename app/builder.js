@@ -1,3 +1,7 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+
 function DEPLOY_SCRIPT(SRC) {
   const SCRIPT = document.createElement('script');
   SCRIPT.type = 'module';

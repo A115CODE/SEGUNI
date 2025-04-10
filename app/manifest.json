@@ -1,6 +1,6 @@
 {
   "name": "SEGUNI App",
-  "short_name": "SEGUNI",
+  "short_name": "Infra App",
   "start_url": "app.html",
   "display": "standalone",
   "background_color": "#ffffff",

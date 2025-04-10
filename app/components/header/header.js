@@ -24,8 +24,33 @@ const HEADER = document.getElementById("HEADER");
 
   // Crear los botones
   headerBUTTONS("LOGO", "../assets/logo.png");
-  headerBUTTONS("LOG_OUT", "../assets/out.svg", true); // Esto lo convierte en botón
-  headerBUTTONS("RELOAD", "../assets/reload.svg", true); // Esto lo convierte en botón
+  headerBUTTONS("LOG_OUT", "../assets/out.svg", true); // convierte en botón
+  headerBUTTONS("installBtn", "../assets/install.svg", true);
+
+
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+e.preventDefault(); // Evita que el navegador muestre el mini-banner
+deferredPrompt = e; // Guarda el evento para usarlo después
+installBtn.style.display = 'block'; // Muestra el botón
+});
+
+installBtn.addEventListener('click', () => {
+if (deferredPrompt) {
+deferredPrompt.prompt(); // Muestra el prompt de instalación
+deferredPrompt.userChoice.then((choiceResult) => {
+  if (choiceResult.outcome === 'accepted') {
+    console.log('El usuario aceptó la instalación');
+  } else {
+    console.log('El usuario canceló la instalación');
+  }
+  deferredPrompt = null;
+  installBtn.style.display = 'none'; // Oculta el botón después
+});
+}
+});
 
   // Inicializar Supabase
   const hola = supabase.createClient(

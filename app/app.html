@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body>
+    
     <button id="installBtn">Instalar Apppppppppppppp</button>
     <script>
       let deferredPrompt;
@@ -75,6 +76,10 @@ installBtn.addEventListener('click', () => {
         } else {
           // Usuario no autenticado
           document.body.innerHTML = "<h1>No tas autorizado weee jajaja XD</h1>";
+          document.addEventListener("DOMContentLoaded", function() {
+            window.location.href = "../login/login.html";
+          });
+
         }
       }
     

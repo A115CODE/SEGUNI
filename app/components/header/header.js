@@ -32,15 +32,15 @@ let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-e.preventDefault(); // Evita que el navegador muestre el mini-banner
-deferredPrompt = e; // Guarda el evento para usarlo después
-installBtn.style.display = 'block'; // Muestra el botón
+  e.preventDefault(); // Evita que el navegador muestre el mini-banner
+  deferredPrompt = e; // Guarda el evento para usarlo después
+  installBtn.style.display = 'block'; // Muestra el botón
 });
 
 installBtn.addEventListener('click', () => {
-if (deferredPrompt) {
-deferredPrompt.prompt(); // Muestra el prompt de instalación
-deferredPrompt.userChoice.then((choiceResult) => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt(); // Muestra el prompt de instalación
+    deferredPrompt.userChoice.then((choiceResult) => {
   if (choiceResult.outcome === 'accepted') {
     console.log('El usuario aceptó la instalación');
   } else {

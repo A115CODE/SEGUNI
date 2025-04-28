@@ -17,6 +17,6 @@ function navbarBTNS(ID, SRC, TXT) {
 
 navbarBTNS('HOME_BTN', '../assets/home.svg', 'Home');
 navbarBTNS('TIME_BTN', '../assets/time.svg', 'Time');
-navbarBTNS('TASK_BTN', '../assets/task.svg', 'Task');
+navbarBTNS('TASK_BTN', '../assets/task.svg', '4DX');
 navbarBTNS('NOTES_BTN', '../assets/notes.svg', 'Notes');
 navbarBTNS('DATABASE_BTN', '../assets/db.svg', 'DataBase');

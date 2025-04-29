@@ -18,5 +18,5 @@ function controller(ID_BTN, ID_APP) {
 controller('HOME_BTN', 'HOME');
 controller('TIME_BTN', 'TIME');
 controller('DATABASE_BTN', 'DATABASE');
-controller('TASK_BTN', 'TASK');
+controller('TASK_BTN', 'SPAX');
 controller('NOTES_BTN', 'NOTES');

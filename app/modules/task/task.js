@@ -45,15 +45,15 @@ BUTTON.textContent = 'Agregar';
 FORM.appendChild(BUTTON);
 
 // LISTAS
-const COMPROMISO_LIST = document.createElement('ul');
+const COMPROMISO_LIST = document.createElement('div');
 COMPROMISO_LIST.id = 'COMPROMISO_LIST';
 SPAX.appendChild(COMPROMISO_LIST);
 
-const RETOS_LIST = document.createElement('ul');
+const RETOS_LIST = document.createElement('div');
 RETOS_LIST.id = 'RETOS_LIST';
 SPAX.appendChild(RETOS_LIST);
 
-const LOGROS_LIST = document.createElement('ul');
+const LOGROS_LIST = document.createElement('div');
 LOGROS_LIST.id = 'LOGROS_LIST';
 SPAX.appendChild(LOGROS_LIST);
 

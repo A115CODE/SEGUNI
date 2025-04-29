@@ -15,12 +15,11 @@
   border: 1px solid var(--seguni-color);
   transition: var(--transition);
 }
-#TASK_LIST {
-  width: auto;
-  height: 100%;
-  overflow-y: scroll;
-  padding-right: 15px;
+/*Listas*/
+#COMPROMISO_LIST{
+  background-color: #ededed;
 }
+
 .task_item {
   background-color: var(--bg-items);
   margin: 20px 0;

@@ -45,25 +45,33 @@ BUTTON.textContent = 'Agregar';
 FORM.appendChild(BUTTON);
 
 // LISTAS
-const COMPROMISO_LIST = document.createElement('div');
+const COMPROMISO_LIST = document.createElement('ul');
 COMPROMISO_LIST.id = 'COMPROMISO_LIST';
 SPAX.appendChild(COMPROMISO_LIST);
 
-const RETOS_LIST = document.createElement('div');
+const RETOS_LIST = document.createElement('ul');
 RETOS_LIST.id = 'RETOS_LIST';
 SPAX.appendChild(RETOS_LIST);
 
-const LOGROS_LIST = document.createElement('div');
+const LOGROS_LIST = document.createElement('ul');
 LOGROS_LIST.id = 'LOGROS_LIST';
 SPAX.appendChild(LOGROS_LIST);
 
 function DEPLOY_HEADERS(root, txt_header) {
-  const HEADER = document.createElement('div');
+
+  let ROOT = document.getElementById(root);
+
+  let HEADER = document.createElement('div');
   HEADER.innerHTML = `
-  <P>${txt_header}</P>
-  `;
-  root.appendChild(CSS);
+  <div>
+    <p>${txt_header}</p>
+  </div>
+    `;
+    ROOT.appendChild(HEADER);
 }
+DEPLOY_HEADERS('COMPROMISO_LIST', 'Compromisos');
+DEPLOY_HEADERS('RETOS_LIST', 'Retos');
+DEPLOY_HEADERS('LOGROS_LIST', 'Logros');
 
 const OPEN_FORM_TASK = document.createElement("button");
 OPEN_FORM_TASK.textContent = "+";
@@ -113,11 +121,6 @@ FORM.addEventListener('submit', async (e) => {
 
 //select
 async function loadTasks() {
-  // Limpiamos los ULs
-  COMPROMISO_LIST.innerHTML = '';
-  RETOS_LIST      .innerHTML = '';
-  LOGROS_LIST     .innerHTML = '';
-
   // Para cada categoría, hacemos un SELECT ... WHERE category = '...'
   const categories = [
     { name: 'Compromisos', el: COMPROMISO_LIST },

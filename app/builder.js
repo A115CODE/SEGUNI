@@ -19,8 +19,8 @@ DEPLOY_SCRIPT('./app.js');
 DEPLOY_SCRIPT('./modules/time/time.js');
 DEPLOY_CSS('./modules/time/time.css');
 //TASKS
-DEPLOY_SCRIPT('./modules/task/task.js');
-DEPLOY_CSS('./modules/task/task.css');
+DEPLOY_SCRIPT('./modules/4dx/4dx.js');
+DEPLOY_CSS('./modules/4dx/4dx.css');
 //NOTES
 DEPLOY_SCRIPT('./modules/notes/notes.js');
 DEPLOY_CSS('./modules/notes/notes.css');

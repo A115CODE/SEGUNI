@@ -57,6 +57,14 @@ const LOGROS_LIST = document.createElement('div');
 LOGROS_LIST.id = 'LOGROS_LIST';
 SPAX.appendChild(LOGROS_LIST);
 
+function DEPLOY_HEADERS(root, txt_header) {
+  const HEADER = document.createElement('div');
+  HEADER.innerHTML = `
+  <P>${txt_header}</P>
+  `;
+  root.appendChild(CSS);
+}
+
 const OPEN_FORM_TASK = document.createElement("button");
 OPEN_FORM_TASK.textContent = "+";
 OPEN_FORM_TASK.id = "OPEN_FORM_TASK";

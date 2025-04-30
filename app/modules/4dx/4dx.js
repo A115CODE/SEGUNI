@@ -64,9 +64,9 @@ function DEPLOY_HEADERS(root, txt_header) {
 
   let HEADER = document.createElement('div');
   HEADER.innerHTML = `
-  <div>
-    <p>${txt_header}</p>
-  </div>
+    <div>
+      <p>${txt_header}</p>
+    </div>
     `;
     ROOT.appendChild(HEADER);
 }

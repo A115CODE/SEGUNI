@@ -68,7 +68,7 @@ function DEPLOY_HEADERS(root, txt_header) {
       <p>${txt_header}</p>
     `;
     ROOT.appendChild(HEADER);
-}
+};
 DEPLOY_HEADERS('COMPROMISO_LIST', 'Compromisos');
 DEPLOY_HEADERS('RETOS_LIST', 'Retos');
 DEPLOY_HEADERS('LOGROS_LIST', 'Logros');

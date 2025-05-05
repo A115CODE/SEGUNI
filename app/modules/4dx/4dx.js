@@ -63,10 +63,9 @@ function DEPLOY_HEADERS(root, txt_header) {
   ROOT.classList.add("listas");
 
   let HEADER = document.createElement('div');
+  HEADER.classList.add("header");
   HEADER.innerHTML = `
-    <div>
       <p>${txt_header}</p>
-    </div>
     `;
     ROOT.appendChild(HEADER);
 }

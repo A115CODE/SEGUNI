@@ -104,24 +104,37 @@ FORM.addEventListener('submit', async (e) => {
 
   if (!text) return;
 
-  // 1) Insertar en Supabase
+  const { data: userData, error: userError } = await supabaseClient.auth.getUser();
+  if (userError || !userData?.user) {
+    console.error('Usuario no autenticado:', userError);
+    return;
+  }
+
+  const email = userData.user.email;
+
   const { data, error } = await supabaseClient
     .from('spax')
-    .insert([{ description: text, category: cat }]);
+    .insert([{ description: text, category: cat, user_email: email }]);
 
   if (error) {
     console.error('Error al guardar:', error);
     return;
   }
 
-  // 2) Limpiar y recargar listas
   INPUT.value = '';
   await loadTasks(); 
 });
 
 //select
 async function loadTasks() {
-  // Para cada categoría, hacemos un SELECT ... WHERE category = '...'
+  const { data: userData, error: userError } = await supabaseClient.auth.getUser();
+  if (userError || !userData?.user) {
+    console.error('Usuario no autenticado:', userError);
+    return;
+  }
+
+  const email = userData.user.email;
+
   const categories = [
     { name: 'Compromisos', el: COMPROMISO_LIST },
     { name: 'Retos',       el: RETOS_LIST      },
@@ -129,14 +142,17 @@ async function loadTasks() {
   ];
 
   for (const { name, el } of categories) {
+    el.innerHTML = ''; // Limpiar antes de agregar
+
     const { data, error } = await supabaseClient
       .from('spax')
       .select('id, description, created_at')
       .eq('category', name)
+      .eq('user_email', email)
       .order('created_at', { ascending: true });
 
     if (error) {
-      console.error('Error al cargar ${name}:, error');
+      console.error('Error al cargar ${name}:', error);
       continue;
     }
 

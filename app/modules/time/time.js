@@ -58,11 +58,7 @@ async function agregarTarea() {
   // Obtener el email del usuario autenticado
   const { data: { user }, error: authError } = await supaBaseTIME.auth.getUser();
 
-  if (authError || !user) {
-    console.error('Error obteniendo el usuario:', authError);
-    alert('No se pudo obtener la sesión del usuario.');
-    return;
-  }
+
 
   let emailUsuario = user.email;
 
@@ -90,11 +86,7 @@ async function cargarTareas() {
   // Obtener el usuario autenticado
   const { data: { user }, error: authError } = await supaBaseTIME.auth.getUser();
 
-  if (authError || !user) {
-    console.error('Error obteniendo el usuario:', authError);
-    alert('No se pudo obtener la sesión del usuario.');
-    return;
-  }
+ 
 
   let emailUsuario = user.email;
 

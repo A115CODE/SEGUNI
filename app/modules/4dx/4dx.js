@@ -142,20 +142,21 @@ async function loadTasks() {
   ];
 
   for (const { name, el } of categories) {
-    el.innerHTML = ''; // Limpiar antes de agregar
-
+    // Limpiar solo los <li>, sin tocar encabezados ni otros elementos
+    [...el.querySelectorAll('li')].forEach(li => li.remove());
+  
     const { data, error } = await supabaseClient
       .from('spax')
       .select('id, description, created_at')
       .eq('category', name)
       .eq('user_email', email)
       .order('created_at', { ascending: true });
-
+  
     if (error) {
       console.error('Error al cargar ${name}:', error);
       continue;
     }
-
+  
     data.forEach(task => {
       const li = document.createElement('li');
       li.textContent = task.description;

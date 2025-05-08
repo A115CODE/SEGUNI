@@ -19,6 +19,15 @@
 .listas{
   width: 90%;
   height: 30%;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow-y: scroll;
+}
+.header{
+  width: 100%;
+  background-color: rgb(215, 215, 215);
+  text-align: center;
+  border-radius: 9px 9px 0 0;
 }
 
 .task_item {

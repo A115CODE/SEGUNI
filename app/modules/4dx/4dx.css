@@ -17,11 +17,15 @@
 }
 /*Listas*/
 .listas{
-  width: 90%;
+  width: 80%;
   height: 30%;
   border-radius: 12px;
+  padding: 1em;
   box-shadow: var(--shadow);
   overflow-y: scroll;
+}
+.listas li{
+  list-style: none;
 }
 .header{
   width: 100%;

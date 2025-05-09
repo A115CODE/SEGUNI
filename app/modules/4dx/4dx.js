@@ -22,7 +22,7 @@ SPAX.appendChild(TXT_APP);
 let editMode = false;
 let editingTaskId = null;
 
-// Crear formulario
+// FORMULARIO
 const FORM = document.createElement('form');
 FORM.id = 'task-form';
 SPAX.appendChild(FORM);
@@ -83,18 +83,16 @@ OPEN_FORM_TASK.textContent = "+";
 OPEN_FORM_TASK.id = "OPEN_FORM_TASK";
 SPAX.appendChild(OPEN_FORM_TASK);
 
-//Logica para abrir y cerrar los forms de las apps
-// Al principio, ocultamos el formulario usando la clase "hidden"
+//Function for form
 FORM.style.display = "none";
-// Evento para abrir/cerrar el formulario al hacer clic en el botón
+
 OPEN_FORM_TASK.addEventListener("click", function () {
-  // Alternar la visibilidad del formulario
   if (FORM.style.display === "none") {
-    FORM.style.display = "block"; // Mostrar el formulario
-    OPEN_FORM_TASK.textContent = "X"; // Cambiar texto del botón
+    FORM.style.display = "block";
+    OPEN_FORM_TASK.textContent = "X";
   } else {
-    FORM.style.display = "none"; // Ocultar el formulario
-    OPEN_FORM_TASK.textContent = "+"; // Cambiar texto del botón
+    FORM.style.display = "none";
+    OPEN_FORM_TASK.textContent = "+"; 
   }
 
   console.log("Formulario visible:", FORM.style.display === "block");
@@ -184,7 +182,7 @@ async function loadTasks() {
       span.textContent = task.description;
       li.appendChild(span);
 
-      // Botón Editar
+      // BtnEditar
       const editBtn = document.createElement('button');
       editBtn.style.marginLeft = '10px';
       editBtn.addEventListener('click', () => {
@@ -199,7 +197,7 @@ async function loadTasks() {
       btnEditing.src = '../assets/edit.svg';
       editBtn.appendChild(btnEditing);
 
-      // Botón Eliminar
+      // BtnEliminar
       const deleteBtn = document.createElement('button');
       deleteBtn.style.marginLeft = '5px';
       deleteBtn.addEventListener('click', async () => {
@@ -226,8 +224,6 @@ async function loadTasks() {
     });
   }
 }
-
-// Llamamos una vez al inicio
 loadTasks();
 
 function checkAndDeleteTasks() {
@@ -254,7 +250,7 @@ async function deleteAllTasks() {
   if (error) {
     console.error('Error al eliminar:', error);
   } else {
-    loadTasks(); // recargar la lista
+    loadTasks(); //Reload en la lista
     console.log('Tareas eliminadas automáticamente.');
   }
 }

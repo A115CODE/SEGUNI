@@ -229,3 +229,35 @@ async function loadTasks() {
 
 // Llamamos una vez al inicio
 loadTasks();
+
+function checkAndDeleteTasks() {
+  const now = new Date();
+  const isTuesday = now.getDay() === 2; //marte es 2 por que dimingo seria 0
+  const isNoon = now.getHours() === 12 && now.getMinutes() === 0;
+
+  if (isTuesday && isNoon) {
+    deleteAllTasks();
+  }
+}
+
+async function deleteAllTasks() {
+  const { data: userData } = await supabaseClient.auth.getUser();
+  const email = userData?.user?.email;
+  if (!email) return;
+
+  const { error } = await supabaseClient
+    .from('spax')
+    .delete()
+    .in('category', ['Compromisos', 'Retos', 'Logros'])
+    .eq('user_email', email);
+
+  if (error) {
+    console.error('Error al eliminar:', error);
+  } else {
+    loadTasks(); // recargar la lista
+    console.log('Tareas eliminadas automáticamente.');
+  }
+}
+
+// Revisa cada minuto si es martes a las 12:00
+setInterval(checkAndDeleteTasks, 60 * 1000);

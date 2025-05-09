@@ -203,7 +203,7 @@ async function loadTasks() {
       const deleteBtn = document.createElement('button');
       deleteBtn.style.marginLeft = '5px';
       deleteBtn.addEventListener('click', async () => {
-        const confirmDelete = confirm('¿Seguro que deseas eliminar este ítem?');
+        const confirmDelete = confirm('¿Estas seguro de eliminar este contenido?');
         if (confirmDelete) {
           const { error } = await supabaseClient
             .from('spax')

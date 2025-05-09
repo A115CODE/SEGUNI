@@ -26,12 +26,13 @@
 }
 .listas li{
   list-style: none;
+  font-size: 12px;
 }
 .header{
   width: 100%;
   text-align: center;
   border-radius: 9px 9px 0 0;
-  border-bottom: 1px solid var(--seguni-color);
+  border-bottom: 1px solid #000;
 }
 
 .task_item {

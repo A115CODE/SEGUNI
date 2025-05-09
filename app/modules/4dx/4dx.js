@@ -186,7 +186,7 @@ async function loadTasks() {
 
       // Botón Editar
       const editBtn = document.createElement('button');
-      editBtn.textContent = 'Editar';
+      editBtn.textContent = '';
       editBtn.style.marginLeft = '10px';
       editBtn.addEventListener('click', () => {
         INPUT.value = task.description;
@@ -196,6 +196,9 @@ async function loadTasks() {
         editingTaskId = task.id;
       });
       li.appendChild(editBtn);
+      const btnEditing = document.createElement('img');
+      btnEditing.src = '../assets/edit.svg';
+      editBtn.appendChild(btnEditing);
 
       // Botón Eliminar
       const deleteBtn = document.createElement('button');
@@ -217,6 +220,9 @@ async function loadTasks() {
         }
       });
       li.appendChild(deleteBtn);
+      const btnDelate = document.createElement('img');
+      btnDelate.src = '../assets/delate.svg';
+      deleteBtn.appendChild(btnDelate);
 
       el.appendChild(li);
     });

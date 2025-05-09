@@ -28,6 +28,11 @@
   list-style: none;
   font-size: 12px;
   padding: 5px 0;
+  border-bottom: 1px dashed #000;
+}
+.listas button{
+  border: none;
+  background-color: transparent;
 }
 .header{
   width: 100%;

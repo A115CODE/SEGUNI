@@ -144,22 +144,68 @@ async function loadTasks() {
   for (const { name, el } of categories) {
     // Limpiar solo los <li>, sin tocar encabezados ni otros elementos
     [...el.querySelectorAll('li')].forEach(li => li.remove());
-  
+
     const { data, error } = await supabaseClient
       .from('spax')
       .select('id, description, created_at')
       .eq('category', name)
       .eq('user_email', email)
       .order('created_at', { ascending: true });
-  
+
     if (error) {
       console.error('Error al cargar ${name}:', error);
       continue;
     }
-  
+
     data.forEach(task => {
       const li = document.createElement('li');
-      li.textContent = task.description;
+
+      const span = document.createElement('span');
+      span.textContent = task.description;
+      li.appendChild(span);
+
+      // Botón Editar
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Editar';
+      editBtn.style.marginLeft = '10px';
+      editBtn.addEventListener('click', async () => {
+        const newDesc = prompt('Edita la descripción:', task.description);
+        if (newDesc && newDesc.trim() !== '') {
+          const { error } = await supabaseClient
+            .from('spax')
+            .update({ description: newDesc.trim() })
+            .eq('id', task.id);
+
+          if (error) {
+            console.error('Error al editar:', error);
+          } else {
+            loadTasks(); // recargar las tareas
+          }
+        }
+      });
+      li.appendChild(editBtn);
+
+      // Botón Eliminar
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Eliminar';
+      deleteBtn.style.marginLeft = '5px';
+      deleteBtn.addEventListener('click', async () => {
+        const confirmDelete = confirm('¿Seguro que deseas eliminar este ítem?');
+        if (confirmDelete) {
+          const { error } = await supabaseClient
+            .from('spax')
+            .delete()
+            .eq('id', task.id);
+
+          if (error) {
+            console.error('Error al eliminar:', error);
+          } else {
+            loadTasks(); // recargar las tareas
+          }
+        }
+      });
+      li.appendChild(deleteBtn);
+
       el.appendChild(li);
     });
   }

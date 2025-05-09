@@ -18,6 +18,11 @@ TXT_APP.id = 'TASK_TXT';
 TXT_APP.textContent = '4DX';
 SPAX.appendChild(TXT_APP);
 
+// Variables globales
+let editMode = false;
+let editingTaskId = null;
+
+// Crear formulario
 const FORM = document.createElement('form');
 FORM.id = 'task-form';
 SPAX.appendChild(FORM);
@@ -30,7 +35,7 @@ FORM.appendChild(INPUT);
 
 const SELECT = document.createElement('select');
 SELECT.id = 'SELECT';
-SELECT.name = 'hola'
+SELECT.name = 'hola';
 SELECT.innerHTML = `
   <option value="Compromisos">Compromisos</option>
   <option value="Retos">Retos</option>
@@ -98,31 +103,47 @@ OPEN_FORM_TASK.addEventListener("click", function () {
 //inster
 FORM.addEventListener('submit', async (e) => {
   e.preventDefault();
+  const description = INPUT.value.trim();
+  const category = SELECT.value;
 
-  const text  = INPUT.value.trim();
-  const cat   = SELECT.value;
+  if (!description) return;
 
-  if (!text) return;
+  const { data: userData } = await supabaseClient.auth.getUser();
+  const email = userData?.user?.email;
+  if (!email) return;
 
-  const { data: userData, error: userError } = await supabaseClient.auth.getUser();
-  if (userError || !userData?.user) {
-    console.error('Usuario no autenticado:', userError);
-    return;
+  if (editMode && editingTaskId) {
+    // Editar tarea
+    const { error } = await supabaseClient
+      .from('spax')
+      .update({ description })
+      .eq('id', editingTaskId);
+
+    if (error) {
+      console.error('Error al actualizar:', error);
+    }
+  } else {
+    // Agregar nueva tarea
+    const { error } = await supabaseClient.from('spax').insert([
+      {
+        description,
+        category,
+        user_email: email,
+        created_at: new Date().toISOString()
+      }
+    ]);
+
+    if (error) {
+      console.error('Error al insertar:', error);
+    }
   }
 
-  const email = userData.user.email;
-
-  const { data, error } = await supabaseClient
-    .from('spax')
-    .insert([{ description: text, category: cat, user_email: email }]);
-
-  if (error) {
-    console.error('Error al guardar:', error);
-    return;
-  }
-
-  INPUT.value = '';
-  await loadTasks(); 
+  // Reset formulario
+  FORM.reset();
+  BUTTON.textContent = 'Agregar';
+  editMode = false;
+  editingTaskId = null;
+  loadTasks();
 });
 
 //select
@@ -142,7 +163,6 @@ async function loadTasks() {
   ];
 
   for (const { name, el } of categories) {
-    // Limpiar solo los <li>, sin tocar encabezados ni otros elementos
     [...el.querySelectorAll('li')].forEach(li => li.remove());
 
     const { data, error } = await supabaseClient
@@ -168,20 +188,12 @@ async function loadTasks() {
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Editar';
       editBtn.style.marginLeft = '10px';
-      editBtn.addEventListener('click', async () => {
-        const newDesc = prompt('Edita la descripción:', task.description);
-        if (newDesc && newDesc.trim() !== '') {
-          const { error } = await supabaseClient
-            .from('spax')
-            .update({ description: newDesc.trim() })
-            .eq('id', task.id);
-
-          if (error) {
-            console.error('Error al editar:', error);
-          } else {
-            loadTasks(); // recargar las tareas
-          }
-        }
+      editBtn.addEventListener('click', () => {
+        INPUT.value = task.description;
+        SELECT.value = name;
+        BUTTON.textContent = 'Actualizar';
+        editMode = true;
+        editingTaskId = task.id;
       });
       li.appendChild(editBtn);
 
@@ -200,7 +212,7 @@ async function loadTasks() {
           if (error) {
             console.error('Error al eliminar:', error);
           } else {
-            loadTasks(); // recargar las tareas
+            loadTasks();
           }
         }
       });

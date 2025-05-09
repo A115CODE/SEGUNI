@@ -186,7 +186,6 @@ async function loadTasks() {
 
       // Botón Editar
       const editBtn = document.createElement('button');
-      editBtn.textContent = '';
       editBtn.style.marginLeft = '10px';
       editBtn.addEventListener('click', () => {
         INPUT.value = task.description;
@@ -202,7 +201,6 @@ async function loadTasks() {
 
       // Botón Eliminar
       const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Eliminar';
       deleteBtn.style.marginLeft = '5px';
       deleteBtn.addEventListener('click', async () => {
         const confirmDelete = confirm('¿Seguro que deseas eliminar este ítem?');
@@ -221,7 +219,7 @@ async function loadTasks() {
       });
       li.appendChild(deleteBtn);
       const btnDelate = document.createElement('img');
-      btnDelate.src = '../assets/delate.svg';
+      btnDelate.src = '../assets/delete.svg';
       deleteBtn.appendChild(btnDelate);
 
       el.appendChild(li);

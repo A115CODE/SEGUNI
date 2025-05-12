@@ -84,3 +84,10 @@
   background-color: var(--seguni-color);
   color: var(--font-1);
 }
+
+@media (min-width: 1024px) {
+  /*Listas*/
+  .listas{
+    width: 50%;
+  }
+}

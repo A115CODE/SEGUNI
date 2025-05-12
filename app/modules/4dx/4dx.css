@@ -33,6 +33,9 @@
   display: flex;
   justify-content: space-between;
 }
+.btnsContainer{
+  display: flex;
+}
 .listas button{
   border: none;
   background-color: transparent;

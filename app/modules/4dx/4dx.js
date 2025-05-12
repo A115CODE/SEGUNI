@@ -184,6 +184,7 @@ async function loadTasks() {
 
             //container buttons
             const btnsContainer = document.createElement('div');
+            btnsContainer.classList.add('btnsContainer');
             li.appendChild(btnsContainer);
 
       // BtnEditar

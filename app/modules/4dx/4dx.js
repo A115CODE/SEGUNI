@@ -92,7 +92,7 @@ OPEN_FORM_TASK.addEventListener("click", function () {
     OPEN_FORM_TASK.textContent = "X";
   } else {
     FORM.style.display = "none";
-    OPEN_FORM_TASK.textContent = "+"; 
+    OPEN_FORM_TASK.textContent = "+";
   }
 
   console.log("Formulario visible:", FORM.style.display === "block");
@@ -182,6 +182,10 @@ async function loadTasks() {
       span.textContent = task.description;
       li.appendChild(span);
 
+            //container buttons
+            const btnsContainer = document.createElement('div');
+            li.appendChild(btnsContainer);
+
       // BtnEditar
       const editBtn = document.createElement('button');
       editBtn.style.marginLeft = '10px';
@@ -192,7 +196,7 @@ async function loadTasks() {
         editMode = true;
         editingTaskId = task.id;
       });
-      li.appendChild(editBtn);
+      btnsContainer.appendChild(editBtn);
       const btnEditing = document.createElement('img');
       btnEditing.src = '../assets/edit.svg';
       editBtn.appendChild(btnEditing);
@@ -215,7 +219,7 @@ async function loadTasks() {
           }
         }
       });
-      li.appendChild(deleteBtn);
+      btnsContainer.appendChild(deleteBtn);
       const btnDelate = document.createElement('img');
       btnDelate.src = '../assets/delete.svg';
       deleteBtn.appendChild(btnDelate);

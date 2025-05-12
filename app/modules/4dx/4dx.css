@@ -23,12 +23,15 @@
   padding: 1em 2em;
   box-shadow: var(--shadow);
   overflow-y: scroll;
+  
 }
 .listas li{
   list-style: none;
   font-size: 12px;
   padding: 5px 0;
   border-bottom: 1px dashed #000;
+  display: flex;
+  justify-content: space-between;
 }
 .listas button{
   border: none;

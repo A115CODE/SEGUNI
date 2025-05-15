@@ -182,7 +182,7 @@ async function loadTasks() {
       span.textContent = task.description;
       li.appendChild(span);
 
-            //container buttons
+            //contenedor de los btns
             const btnsContainer = document.createElement('div');
             btnsContainer.classList.add('btnsContainer');
             li.appendChild(btnsContainer);

@@ -27,3 +27,50 @@ DEPLOY_CANVAS('TIMES_APP');
 DEPLOY_CANVAS('4DX_APP');
 DEPLOY_CANVAS('NOTES_APP')
 DEPLOY_CANVAS('DB_APP')
+
+    // —— Función para obtener conteo y pintar gráfico ——
+    async function dibujarGraficoTareas() {
+      // 1) Obtener sólo el count de la tabla “tareas”
+      const { count, error } = await supabaseClientDashboard
+        .from('tareas')
+        .select('*', { count: 'exact', head: true });
+
+      if (error) {
+        console.error('Error al traer el conteo de tareas:', error);
+        return;
+      }
+
+      // 2) Tomar el contexto del canvas y crear el chart
+      const ctx = document.getElementById('TIMES_APP').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Tareas'],
+          datasets: [{
+            label: 'Total de registros en “tareas”',
+            data: [count],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: `Total de filas en “tareas”: ${count}`
+            }
+          }
+        }
+      });
+    }
+
+    // —— Ejecutar cuando el DOM esté listo ——
+    window.addEventListener('DOMContentLoaded', dibujarGraficoTareas);

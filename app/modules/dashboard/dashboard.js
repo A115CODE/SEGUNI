@@ -7,6 +7,8 @@ const Dash_ANON_KEY =
 const supabaseClientDashboard = createClient(Dash_URL, Dash_ANON_KEY);
 
 const FRAMEAPP = document.getElementById('FRAMEAPP');
+console.log('FRAMEAPP:', FRAMEAPP); // <– Verifica si es null o válido
+
 
 const dashboard = document.createElement('div');
 dashboard.classList.add('aplication');
@@ -25,20 +27,20 @@ function DEPLOY_CANVAS(ID) {
 
 DEPLOY_CANVAS('TIMES_APP');
 DEPLOY_CANVAS('4DX_APP');
-DEPLOY_CANVAS('NOTES_APP')
-DEPLOY_CANVAS('DB_APP')
+DEPLOY_CANVAS('NOTES_APP');
+DEPLOY_CANVAS('DB_APP');
 
     // —— Función para obtener conteo y pintar gráfico ——
     async function dibujarGraficoTareas() {
       // 1) Obtener sólo el count de la tabla “tareas”
-      const { count, error } = await supabaseClientDashboard
-        .from('tareas')
-        .select('*', { count: 'exact', head: true });
+      const { count, error } = await supabaseClientDashboard.from('tareas').select('*', { count: 'exact', head: true });
 
-      if (error) {
-        console.error('Error al traer el conteo de tareas:', error);
-        return;
-      }
+        if (error) {
+          console.error('Error al traer el conteo de tareas:', error);
+          return;
+        }
+        console.log('Conteo de tareas:', count);
+        
 
       // 2) Tomar el contexto del canvas y crear el chart
       const ctx = document.getElementById('TIMES_APP').getContext('2d');
@@ -71,6 +73,3 @@ DEPLOY_CANVAS('DB_APP')
         }
       });
     }
-
-    // —— Ejecutar cuando el DOM esté listo ——
-    window.addEventListener('DOMContentLoaded', dibujarGraficoTareas);

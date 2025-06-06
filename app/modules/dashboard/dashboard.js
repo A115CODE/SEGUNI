@@ -18,8 +18,11 @@ const CONTAINER_GRAPHS = document.getElementById('CONTAINER_GRAPHS');
 FRAMEAPP.appendChild(CONTAINER_GRAPHS); 
 
 const SUPABASE_STATUS = document.createElement('iframe');
-SUPABASE_STATUS.src = 'https://status.supabase.com/'
-FRAMEAPP.appendChild(SUPABASE_STATUS)
+SUPABASE_STATUS.src = 'https://status.supabase.com/';
+SUPABASE_STATUS.style.width = '100%';
+SUPABASE_STATUS.style.height = '40vh';
+SUPABASE_STATUS.style.border = 'none';
+FRAMEAPP.appendChild(SUPABASE_STATUS);
 
 const ctx = document.getElementById('TIMES_APP');
 

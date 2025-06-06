@@ -9,14 +9,12 @@ const supabaseClientDashboard = createClient(Dash_URL, Dash_ANON_KEY);
 const FRAMEAPP = document.getElementById('FRAMEAPP');
 console.log('FRAMEAPP:', FRAMEAPP); // <– Verifica si es null o válido
 
-const DASHBOARD = document.createElement('section');
-DASHBOARD.classList.add('aplication');
-DASHBOARD.id = 'DASHBOARD';
-FRAMEAPP.appendChild(DASHBOARD);
+const CONTAINER_GRAPHS = document.getElementById('CONTAINER_GRAPHS');
+FRAMEAPP.appendChild(CONTAINER_GRAPHS); 
 
 const SUPABASE_STATUS = document.createElement('iframe');
 SUPABASE_STATUS.src = 'https://status.supabase.com/'
-DASHBOARD.appendChild(SUPABASE_STATUS)
+FRAMEAPP.appendChild(SUPABASE_STATUS)
 
 const ctx = document.getElementById('TIMES_APP');
 

@@ -14,8 +14,6 @@ DASHBOARD.classList.add('aplication');
 DASHBOARD.id = 'DASHBOARD';
 FRAMEAPP.appendChild(DASHBOARD);
 
-
-
 const SUPABASE_STATUS = document.createElement('iframe');
 SUPABASE_STATUS.src = 'https://status.supabase.com/'
 DASHBOARD.appendChild(SUPABASE_STATUS)

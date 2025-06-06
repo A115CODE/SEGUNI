@@ -11,9 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
+
+    <div>
+      <canvas id="TIMES_APP"></canvas>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="service-worker.js"></script>
     <script>
@@ -50,7 +54,7 @@
         } else {
           // Usuario no autenticado
           window.location.href = "../login/login.html";
-          document.body.innerHTML = "<P>INICIANDO SESION...</P>";
+          document.body.innerHTML = "<P>Cargando...</P>";
         }
       }
     

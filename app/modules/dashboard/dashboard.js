@@ -11,7 +11,7 @@ console.log('FRAMEAPP:', FRAMEAPP); // <– Verifica si es null o válido
 
 const GRAPHS = document.createElement('section');
 GRAPHS.classList.add('aplication');
-GRAPHS.id = 'GRAPHS';
+GRAPHS.id = 'HOME';
 FRAMEAPP.appendChild(GRAPHS);
 
 const SUPABASE_STATUS = document.createElement('iframe');
@@ -19,10 +19,10 @@ SUPABASE_STATUS.src = 'https://status.supabase.com/';
 SUPABASE_STATUS.style.width = '100%';
 SUPABASE_STATUS.style.height = '40vh';
 SUPABASE_STATUS.style.border = 'none';
-FRAMEAPP.appendChild(SUPABASE_STATUS);
+GRAPHS.appendChild(SUPABASE_STATUS);
 
 const CONTAINER_GRAPHS = document.getElementById('CONTAINER_GRAPHS');
-FRAMEAPP.appendChild(CONTAINER_GRAPHS); 
+GRAPHS.appendChild(CONTAINER_GRAPHS); 
 
 const ctx = document.getElementById('TIMES_APP');
 

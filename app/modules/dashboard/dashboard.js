@@ -21,14 +21,6 @@ SUPABASE_STATUS.style.height = '40vh';
 SUPABASE_STATUS.style.border = 'none';
 GRAPHS.appendChild(SUPABASE_STATUS);
 
-const DRAWIO = document.createElement('iframe');
-DRAWIO.id = 'DRAWIO';
-DRAWIO.src = 'https://app.diagrams.net/?src=about';
-DRAWIO.style.width = '100%';
-DRAWIO.style.height = '40vh';
-DRAWIO.style.border = 'none';
-GRAPHS.appendChild(DRAWIO);
-
 const CONTAINER_GRAPHS = document.getElementById('CONTAINER_GRAPHS');
 GRAPHS.appendChild(CONTAINER_GRAPHS); 
 

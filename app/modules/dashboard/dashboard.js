@@ -23,6 +23,7 @@ GRAPHS.appendChild(SUPABASE_STATUS);
 
 const DRAWIO = document.createElement('iframe');
 DRAWIO.src = 'https://www.drawio.com/';
+DRAWIO.sandbox = 'allow-scripts allow-same-origin';
 DRAWIO.style.width = '100%';
 DRAWIO.style.height = '40vh';
 DRAWIO.style.border = 'none';

@@ -28,7 +28,7 @@ GRAPHS.appendChild(BTN_DRAW);
 
 const DRAWIO = document.createElement('iframe');
 DRAWIO.id = 'DRAWIO';
-DRAWIO.src = 'https://app.diagrams.net/?src=about';
+DRAWIO.src = 'https://app.diagrams.net/?embed=1&ui=atlas&spin=1&proto=json';
 DRAWIO.style.width = '100%';
 DRAWIO.style.height = '40vh';
 DRAWIO.style.border = 'none';

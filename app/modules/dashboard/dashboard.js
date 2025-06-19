@@ -68,11 +68,6 @@ window.addEventListener('message', function (event) {
 });
 
 
-// Evento click para cargar la URL en el iframe
-BTN_DRAW.addEventListener('click', () => {
-  DRAWIO.src = 'https://app.diagrams.net/?embed=1&ui=atlas&spin=1&proto=json';
-});
-
 const CONTAINER_GRAPHS = document.getElementById('CONTAINER_GRAPHS');
 GRAPHS.appendChild(CONTAINER_GRAPHS); 
 

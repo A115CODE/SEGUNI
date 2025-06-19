@@ -21,13 +21,22 @@ SUPABASE_STATUS.style.height = '40vh';
 SUPABASE_STATUS.style.border = 'none';
 GRAPHS.appendChild(SUPABASE_STATUS);
 
+const BTN_DRAW = document.createElement('button');
+BTN_DRAW.href = 'https://app.diagrams.net/?src=about';
+BTN_DRAW.textContent = 'Crear Diagrama';
+GRAPHS.appendChild(BTN_DRAW);
+
 const DRAWIO = document.createElement('iframe');
-DRAWIO.src = 'https://www.drawio.com/';
-DRAWIO.sandbox = 'allow-scripts allow-same-origin';
+DRAWIO.id = 'DRAWIO';
 DRAWIO.style.width = '100%';
 DRAWIO.style.height = '40vh';
 DRAWIO.style.border = 'none';
 GRAPHS.appendChild(DRAWIO);
+
+// Evento click para cargar la URL en el iframe
+BTN_DRAW.addEventListener('click', () => {
+  DRAWIO.src = 'https://app.diagrams.net/?src=about';
+});
 
 const CONTAINER_GRAPHS = document.getElementById('CONTAINER_GRAPHS');
 GRAPHS.appendChild(CONTAINER_GRAPHS); 

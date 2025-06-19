@@ -21,18 +21,52 @@ SUPABASE_STATUS.style.height = '40vh';
 SUPABASE_STATUS.style.border = 'none';
 GRAPHS.appendChild(SUPABASE_STATUS);
 
+const GRAPHS = document.getElementById('GRAPHS');
+
+// Crear botón
 const BTN_DRAW = document.createElement('button');
-BTN_DRAW.href = 'https://app.diagrams.net/?src=about';
 BTN_DRAW.textContent = 'Crear Diagrama';
 GRAPHS.appendChild(BTN_DRAW);
 
+// Crear iframe
 const DRAWIO = document.createElement('iframe');
 DRAWIO.id = 'DRAWIO';
-DRAWIO.src = 'https://app.diagrams.net/?embed=1&ui=atlas&spin=1&proto=json';
+DRAWIO.src = 'https://embed.diagrams.net/?embed=1&proto=json';
 DRAWIO.style.width = '100%';
-DRAWIO.style.height = '40vh';
-DRAWIO.style.border = 'none';
+DRAWIO.style.height = '60vh';
+DRAWIO.style.border = '1px solid #ccc';
 GRAPHS.appendChild(DRAWIO);
+
+// Evento click: recarga draw.io (si quieres abrir uno nuevo cada vez)
+BTN_DRAW.addEventListener('click', () => {
+  // Por ejemplo, cargar XML vacío o uno predeterminado
+  const diagramXml = '<mxfile><diagram name="Página-1" id="abc123">...</diagram></mxfile>';
+  DRAWIO.contentWindow.postMessage(JSON.stringify({
+    action: 'load',
+    xml: diagramXml
+  }), '*');
+});
+
+// Escuchar eventos desde draw.io
+window.addEventListener('message', function (event) {
+  const msg = JSON.parse(event.data);
+
+  if (msg.event === 'init') {
+    // El editor está listo: puedes cargar un diagrama aquí si quieres
+    console.log('Editor listo');
+  }
+
+  if (msg.event === 'save') {
+    // Aquí recibes el XML del diagrama cuando el usuario guarda
+    console.log('Diagrama guardado:', msg.xml);
+    // Puedes guardarlo en tu base de datos, localStorage, etc.
+  }
+
+  if (msg.event === 'exit') {
+    console.log('Editor cerrado');
+  }
+});
+
 
 // Evento click para cargar la URL en el iframe
 BTN_DRAW.addEventListener('click', () => {

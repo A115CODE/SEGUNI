@@ -21,7 +21,7 @@ DATA.appendChild(DATA_TXT);
 const DRAWIO = document.createElement('iframe');
 DRAWIO.id = 'drawioFrame';
 DRAWIO.src = 'https://embed.diagrams.net/?embed=1&proto=json';
-DRAWIO.style = 'width: 600px; height: 600px; border: 0';
+DRAWIO.style = 'width: 100%; height: 600px; border: 0';
 DATA.appendChild(DRAWIO);
 
 const iframe = document.getElementById('drawioFrame');

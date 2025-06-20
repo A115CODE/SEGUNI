@@ -23,3 +23,40 @@ DRAWIO.id = 'drawioFrame';
 DRAWIO.src = 'https://embed.diagrams.net/?embed=1&proto=json';
 DRAWIO.style = 'width: 100%; height: 600px; border: 0';
 DATA.appendChild(DRAWIO);
+
+const iframe = document.getElementById('drawioFrame');
+
+// Escucha mensajes desde draw.io
+window.addEventListener('message', function (evt) {
+  const msg = JSON.parse(evt.data);
+
+  if (msg.event === 'init') {
+    // Se inicializó el iframe, puedes enviar el diagrama
+    const exampleXml =
+      '<mxfile><diagram name="Página-1" id="abc123">...</diagram></mxfile>';
+      DRAWIO.contentWindow.postMessage(
+      JSON.stringify({
+        action: 'load',
+        xml: exampleXml,
+      }),
+      '*'
+    );
+  }
+
+  if (msg.event === 'save') {
+    // El usuario hizo clic en guardar, aquí recibes el XML
+    console.log('Diagrama guardado:', msg.xml);
+  }
+
+  if (msg.event === 'exit') {
+    console.log('Editor cerrado');
+  }
+});
+
+      // Puedes enviar mensajes manualmente como guardar
+      document.getElementById('btnLoad').onclick = function () {
+        iframe.contentWindow.postMessage(
+          JSON.stringify({ action: 'export' }),
+          '*'
+        );
+      };

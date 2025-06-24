@@ -29,13 +29,11 @@ OPEN_DRAW.textContent = "+";
 OPEN_DRAW.id = "OPEN_DRAW";
 DATA.appendChild(OPEN_DRAW);
 
-//Logica para abrir y cerrar los forms de las apps
-// Al principio, ocultamos el formulario usando la clase "hidden"
 DRAWIO.style.display = "none";
 // Evento para abrir/cerrar el formulario al hacer clic en el botón
 OPEN_DRAW.addEventListener("click", function () {
   if (DRAWIO.style.display === "none") {
-    DRAWIO.style.display = "flex"; // Mostrar el formulario
+    DRAWIO.style.display = "flex";
     OPEN_DRAW.textContent = "X"; // Cambiar texto del botón
   } else {
     DRAWIO.style.display = "none"; // Ocultar el formulario

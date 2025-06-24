@@ -2,7 +2,9 @@
     position: fixed;
     min-width: 95%;
     min-height: 98%;
+    top: 0%;
     left: 5%;
+    border-radius: 25px;
 }
 #OPEN_DRAW{
     width: 40px;

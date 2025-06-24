@@ -21,19 +21,21 @@ DATA.appendChild(DATA_TXT);
 const DRAWIO = document.createElement('iframe');
 DRAWIO.id = 'drawioFrame';
 DRAWIO.src = 'https://embed.diagrams.net/?embed=1&proto=json';
-DRAWIO.style = 'border: 0';
+DRAWIO.style = 'width: 100%; height: 600px; border: 0';
 DATA.appendChild(DRAWIO);
 
 const OPEN_DRAW = document.createElement("button");
-OPEN_DRAW.textContent = "+";
+OPEN_DRAW.textContent = "++";
 OPEN_DRAW.id = "OPEN_DRAW";
 DATA.appendChild(OPEN_DRAW);
 
+//Logica para abrir y cerrar los forms de las apps
+// Al principio, ocultamos el formulario usando la clase "hidden"
 DRAWIO.style.display = "none";
 // Evento para abrir/cerrar el formulario al hacer clic en el botón
 OPEN_DRAW.addEventListener("click", function () {
   if (DRAWIO.style.display === "none") {
-    DRAWIO.style.display = "flex";
+    DRAWIO.style.display = "flex"; // Mostrar el formulario
     OPEN_DRAW.textContent = "X"; // Cambiar texto del botón
   } else {
     DRAWIO.style.display = "none"; // Ocultar el formulario
@@ -71,7 +73,6 @@ window.addEventListener('message', function (evt) {
   }
 });
 
-      // Puedes enviar mensajes manualmente como guardar
 document.getElementById('btnLoad').onclick = function () {
   iframe.contentWindow.postMessage(
     JSON.stringify({ action: 'export' }),

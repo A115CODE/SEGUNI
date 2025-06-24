@@ -1,10 +1,15 @@
 #drawioFrame{
     position: fixed;
     min-width: 94%;
-    min-height: 98%;
-    top: 0%;
+    min-height: 94%;
+    top: 2%;
+    bottom: 2%;
+    right: 2%;
     left: 5%;
     border-radius: 25px;
+    padding: 10px;
+    background-color: #dadada;
+   
 }
 #OPEN_DRAW{
     width: 40px;

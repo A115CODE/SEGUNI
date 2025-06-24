@@ -87,8 +87,8 @@ async function loadNotes() {
   // Obtener solo las notas del usuario autenticado
   const { data, error } = await supabaseClient
     .from("notes")
-    .select("id, title, content, created_at") // Ya no necesitamos el email en la selección
-    .eq("email", email) // Filtrar por email del usuario actual
+    .select("id, title, content, created_at")
+    .eq("email", email) //filtro
     .order("created_at", { ascending: false });
 
   if (error) {

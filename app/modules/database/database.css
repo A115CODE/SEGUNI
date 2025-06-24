@@ -1,9 +1,8 @@
 #drawioFrame{
     position: fixed;
-    top: 0%;
+    min-width: 95%;
+    min-height: 98%;
     left: 5%;
-    right: 0%;
-    bottom: 0%;
 }
 #OPEN_DRAW{
     width: 40px;

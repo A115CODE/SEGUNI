@@ -21,11 +21,11 @@ DATA.appendChild(DATA_TXT);
 const DRAWIO = document.createElement('iframe');
 DRAWIO.id = 'drawioFrame';
 DRAWIO.src = 'https://embed.diagrams.net/?embed=1&proto=json';
-DRAWIO.style = 'width: 100%; height: 600px; border: 0';
+DRAWIO.style = 'border: 0';
 DATA.appendChild(DRAWIO);
 
 const OPEN_DRAW = document.createElement("button");
-OPEN_DRAW.textContent = "++";
+OPEN_DRAW.textContent = "+";
 OPEN_DRAW.id = "OPEN_DRAW";
 DATA.appendChild(OPEN_DRAW);
 

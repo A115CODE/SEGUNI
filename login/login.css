@@ -13,8 +13,8 @@ h3{
 }
 #loginForm{
     position: fixed;
-    top: 20%;
-    bottom: 20%;
+    top: 25%;
+    bottom: 25%;
     right: 20%;
     left: 20%;
     display: flex;
@@ -51,8 +51,6 @@ button img{
     #loginForm{
         left: 30%;
         right: 30%;
-        top: 30%;
-        bottom: 30%;
     }
     button {
         padding: 15px;

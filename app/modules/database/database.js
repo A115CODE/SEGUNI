@@ -25,8 +25,8 @@ DRAWIO.style = 'width: 100%; height: 600px; border: 0';
 DATA.appendChild(DRAWIO);
 
 const OPEN_DRAW = document.createElement("button");
-OPEN_DRAW.textContent = "+jdcnknjasndlsklaksndlsdanlaksndlkansdslkndsaklndaskdlna";
-OPEN_DRAW.id = "";
+OPEN_DRAW.textContent = "++";
+OPEN_DRAW.id = "OPEN_DRAW";
 DATA.appendChild(OPEN_DRAW);
 
 //Logica para abrir y cerrar los forms de las apps

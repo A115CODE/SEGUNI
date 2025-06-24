@@ -1,65 +1,7 @@
-#DATABASE {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#DATA_TXT {
-    color: var(--seguni-color);
-    text-align: center;
-}
-
-#DATA_FORM{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-#DATA_BTN {
-    margin-top: 5px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 45px;
-    background-color: var(--seguni-color);
-    color: var(--font-1);
-}
-
-#DATA_LIST{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: scroll;
-}
-.data_base_item{
-    width: 80%;
-    background-color: var(--bg-items);
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    list-style: none;
-}
-.data_item {
-    font-weight: lighter;
-    padding: 10px 0;
-    color: rgb(106, 106, 106);
-}
-
-#OPEN_FORM_DB{
-    width: 40px;
-    height: 40px;
+#drawioFrame{
     position: fixed;
-    bottom: 5%;
-    right: 5%;
-    font-size: 1.5em;
-    padding: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--seguni-color);
-    color: var(--font-1);
+    top: 0%;
+    left: 5%;
+    right: 0%;
+    bottom: 0%;
 }

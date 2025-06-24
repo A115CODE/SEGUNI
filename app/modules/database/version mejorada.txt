@@ -1,0 +1,97 @@
+¡Perfecto! Te muestro cómo hacer que el formulario (nombre del mapa y correo) se oculte automáticamente después de guardar exitosamente, y también cómo validarlo antes de guardar.
+
+---
+
+### ✅ **1. HTML del formulario**
+
+Primero, asegúrate de tener un `div` para envolver los inputs y el botón, como este:
+
+```html
+<div id="formularioMapa">
+  <input type="text" id="nombreMapa" placeholder="Nombre del mapa mental">
+  <input type="email" id="correoUsuario" placeholder="Correo del usuario">
+  <button id="btnGuardar">Guardar Mapa Mental</button>
+</div>
+```
+
+---
+
+### ✅ **2. JavaScript mejorado con validación y ocultamiento**
+
+```js
+const formulario = document.getElementById('formularioMapa');
+const inputNombre = document.getElementById('nombreMapa');
+const inputCorreo = document.getElementById('correoUsuario');
+
+async function guardarEnSupabase(xml) {
+  const nombre = inputNombre.value.trim();
+  const correo = inputCorreo.value.trim();
+
+  if (!nombre || !correo || !xml) {
+    alert("⚠️ Por favor completa todos los campos antes de guardar.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient.from('mapas_mentales').insert([
+    {
+      nombre,
+      xml,
+      correo_usuario: correo
+    }
+  ]);
+
+  if (error) {
+    console.error("❌ Error guardando en Supabase:", error);
+    alert("Hubo un error al guardar el mapa. Inténtalo de nuevo.");
+  } else {
+    console.log("✅ Mapa guardado con éxito:", data);
+    alert("¡✅ Mapa mental guardado correctamente!");
+
+    // Oculta el formulario
+    formulario.style.display = "none";
+
+    // Limpia los campos
+    inputNombre.value = "";
+    inputCorreo.value = "";
+
+    // También puedes ocultar el iframe si quieres:
+    DRAWIO.style.display = "none";
+    OPEN_DRAW.textContent = "+";
+  }
+}
+```
+
+---
+
+### ✅ 3. Botón guardar manual actualizado
+
+```js
+document.getElementById('btnGuardar').addEventListener('click', () => {
+  iframe.contentWindow.postMessage(
+    JSON.stringify({ action: 'export' }),
+    '*'
+  );
+});
+```
+
+---
+
+### 🎁 Opcional: Mostrar el formulario al abrir Draw\.io
+
+Si quieres que el formulario se muestre solo cuando se abre el editor:
+
+```js
+OPEN_DRAW.addEventListener("click", function () {
+  const abierto = DRAWIO.style.display === "flex";
+
+  DRAWIO.style.display = abierto ? "none" : "flex";
+  OPEN_DRAW.textContent = abierto ? "+" : "X";
+  
+  // Mostrar formulario solo si se abre el editor
+  formulario.style.display = abierto ? "none" : "block";
+});
+```
+
+---
+
+¿Te gustaría que te ayude también a mostrar los mapas guardados en una lista debajo, o incluso a volver a cargarlos en el editor?

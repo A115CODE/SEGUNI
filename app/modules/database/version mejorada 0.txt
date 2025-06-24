@@ -1,0 +1,96 @@
+Perfecto, ya tienes una buena base con el `iframe` de **Draw\.io** embebido y la conexión a Supabase establecida. Lo que necesitas ahora es:
+
+### ✅ 1. Crear la tabla en Supabase
+
+Primero, ve a la [interfaz de Supabase](https://app.supabase.com/project/dvuqnktmjvotdlnbbnhw) > pestaña **"Table Editor"** y crea una nueva tabla llamada `mapas_mentales` con las siguientes columnas:
+
+| Nombre columna  | Tipo      | Atributos                                  |
+| --------------- | --------- | ------------------------------------------ |
+| id              | UUID      | Primary Key, Default: `uuid_generate_v4()` |
+| nombre          | text      |                                            |
+| xml             | text      |                                            |
+| creado\_en      | timestamp | Default: `now()`                           |
+| correo\_usuario | text      |                                            |
+
+> ⚠️ Asegúrate de tener habilitada la extensión `uuid-ossp` si vas a usar UUIDs en Supabase.
+
+---
+
+### ✅ 2. Agregar un botón para guardar el diagrama y pedir datos al usuario
+
+Puedes hacer un formulario para pedir el **nombre** y **correo**, y luego guardar el XML exportado desde Draw\.io.
+
+Aquí tienes el **script modificado** con el guardado a Supabase:
+
+```html
+<!-- Botón y campos para guardar -->
+<input type="text" id="nombreMapa" placeholder="Nombre del mapa mental">
+<input type="email" id="correoUsuario" placeholder="Correo del usuario">
+<button id="btnGuardar">Guardar Mapa Mental</button>
+```
+
+Y añade este JavaScript después del `addEventListener('message', ...)`:
+
+```js
+let currentXml = null;
+
+// Captura XML del mensaje de exportación
+window.addEventListener('message', function (evt) {
+  const msg = JSON.parse(evt.data);
+
+  if (msg.event === 'export') {
+    currentXml = msg.data;
+    guardarEnSupabase(currentXml);
+  }
+
+  if (msg.event === 'save') {
+    // También puedes guardar directamente desde aquí
+    currentXml = msg.xml;
+    guardarEnSupabase(currentXml);
+  }
+});
+
+async function guardarEnSupabase(xml) {
+  const nombre = document.getElementById('nombreMapa').value;
+  const correo = document.getElementById('correoUsuario').value;
+
+  if (!nombre || !correo || !xml) {
+    alert("Faltan datos para guardar");
+    return;
+  }
+
+  const { data, error } = await supabaseClient.from('mapas_mentales').insert([
+    {
+      nombre,
+      xml,
+      correo_usuario: correo
+    }
+  ]);
+
+  if (error) {
+    console.error("Error guardando:", error);
+    alert("Error al guardar el mapa");
+  } else {
+    console.log("Mapa guardado con éxito:", data);
+    alert("¡Mapa mental guardado!");
+  }
+}
+
+// Acción del botón manual de guardar
+document.getElementById('btnGuardar').addEventListener('click', () => {
+  iframe.contentWindow.postMessage(
+    JSON.stringify({ action: 'export' }),
+    '*'
+  );
+});
+```
+
+---
+
+### ✅ 3. Resultado final
+
+Cuando el usuario pulse **"Guardar"**, se extraerá el XML desde el iframe y se enviará a Supabase junto con el nombre y su correo.
+
+---
+
+¿Te gustaría que te ayudara a mostrar una tabla con los mapas mentales guardados o a cargar uno desde Supabase para editarlo?

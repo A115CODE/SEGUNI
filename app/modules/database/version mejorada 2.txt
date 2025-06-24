@@ -1,0 +1,116 @@
+
+¡Perfecto! Te ayudaré a crear una sección para:
+
+1. **Mostrar la lista de mapas guardados** desde Supabase.
+2. **Permitir cargar uno de esos mapas nuevamente** en el editor de Draw\.io.
+
+---
+
+## ✅ 1. Añadir un contenedor para mostrar los mapas
+
+Agrega este bloque en tu HTML donde quieras que aparezca la lista:
+
+```html
+<section id="listaMapas">
+  <h3>Mis mapas mentales guardados</h3>
+  <ul id="mapasGuardados"></ul>
+</section>
+```
+
+---
+
+## ✅ 2. Función para cargar mapas desde Supabase y mostrarlos
+
+```js
+async function cargarMapasGuardados() {
+  const correo = inputCorreo.value.trim(); // Asegúrate de usar el correo del usuario activo
+
+  if (!correo) {
+    alert("Introduce tu correo para cargar tus mapas guardados.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('mapas_mentales')
+    .select('id, nombre, creado_en, xml')
+    .eq('correo_usuario', correo)
+    .order('creado_en', { ascending: false });
+
+  const lista = document.getElementById('mapasGuardados');
+  lista.innerHTML = '';
+
+  if (error) {
+    console.error("Error al cargar mapas:", error);
+    lista.innerHTML = '<li>Error al cargar mapas.</li>';
+    return;
+  }
+
+  if (data.length === 0) {
+    lista.innerHTML = '<li>No hay mapas guardados.</li>';
+    return;
+  }
+
+  data.forEach(mapa => {
+    const li = document.createElement('li');
+    li.textContent = `${mapa.nombre} (${new Date(mapa.creado_en).toLocaleString()})`;
+
+    const btnCargar = document.createElement('button');
+    btnCargar.textContent = "Cargar";
+    btnCargar.addEventListener('click', () => {
+      cargarMapaEnEditor(mapa.xml);
+    });
+
+    li.appendChild(btnCargar);
+    lista.appendChild(li);
+  });
+}
+```
+
+---
+
+## ✅ 3. Función para cargar un mapa en el editor
+
+```js
+function cargarMapaEnEditor(xml) {
+  DRAWIO.style.display = "flex";
+  OPEN_DRAW.textContent = "X";
+  formulario.style.display = "block";
+
+  iframe.contentWindow.postMessage(
+    JSON.stringify({
+      action: 'load',
+      xml: xml
+    }),
+    '*'
+  );
+}
+```
+
+---
+
+## ✅ 4. Agrega botón para "Ver mapas guardados"
+
+Puedes agregar un botón para que el usuario los cargue cuando quiera:
+
+```html
+<button id="btnVerMapas">📂 Ver mapas guardados</button>
+```
+
+Y su función:
+
+```js
+document.getElementById('btnVerMapas').addEventListener('click', cargarMapasGuardados);
+```
+
+---
+
+### 🧠 ¿Qué más podrías hacer luego?
+
+* Agregar botón para eliminar mapas.
+* Agregar buscador por nombre.
+* Guardar sesión del usuario y filtrar automáticamente.
+* Agregar paginación si hay muchos mapas.
+
+---
+
+¿Quieres que agregue alguna de esas funciones ahora, o lo dejamos funcionando así por el momento?

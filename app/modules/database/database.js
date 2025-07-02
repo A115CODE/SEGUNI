@@ -36,6 +36,10 @@ OPEN_DRAW.textContent = "+";
 OPEN_DRAW.id = "OPEN_DRAW";
 DATA.appendChild(OPEN_DRAW);
 
+const DRAW_LIST = document.createElement("section");
+DRAW_LIST.id = "listaDiagramas";
+DRAW_LIST.textContent = "esta es la lista";
+DATA.appendChild(DRAW_LIST);
 
 DRAWIO.style.display = "none";
 OPEN_DRAW.addEventListener("click", function () {
@@ -51,7 +55,30 @@ OPEN_DRAW.addEventListener("click", function () {
 });
 
 const iframe = document.getElementById('drawioFrame');
-// Escucha mensajes desde draw.io
+
+async function cargarDiagramasColaborativos() {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    alert("Debes iniciar sesión para ver los diagramas.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("diagramas")
+    .select("id, nombre, created_at, correo_usuario")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error al obtener diagramas:", error);
+    return;
+  }
+
+  mostrarListaDiagramas(data);
+}
+
+// Escucha Y guarda mensajes desde draw.io
+//INSERT
 window.addEventListener('message', async function (evt) {
   let msg;
   try {
@@ -106,3 +133,61 @@ window.addEventListener('message', async function (evt) {
     console.log('Editor cerrado');
   }
 });
+
+//SELECT
+function mostrarListaDiagramas(diagramas) {
+  const contenedor = document.getElementById("listaDiagramas");
+  contenedor.innerHTML = "";
+
+  if (diagramas.length === 0) {
+    contenedor.innerHTML = "<p>No hay diagramas guardados aún.</p>";
+    return;
+  }
+
+  const ul = document.createElement("ul");
+  diagramas.forEach((d) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>${d.nombre}</strong> 
+      (${new Date(d.created_at).toLocaleString()})<br>
+      <small>Creado por: ${d.correo_usuario}</small>
+    `;
+
+    const btnVer = document.createElement("button");
+    btnVer.textContent = "Ver";
+    btnVer.onclick = () => cargarDiagramaDesdeBD(d.id);
+
+    li.appendChild(btnVer);
+    ul.appendChild(li);
+  });
+
+  contenedor.appendChild(ul);
+}
+
+async function cargarDiagramaDesdeBD(id) {
+  const { data, error } = await supabaseClient
+    .from("diagramas")
+    .select("contenido")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error al cargar diagrama:", error);
+    alert("No se pudo cargar el diagrama.");
+    return;
+  }
+
+  const xml = data.contenido;
+
+  DRAWIO.contentWindow.postMessage(
+    JSON.stringify({
+      action: "load",
+      xml: xml,
+    }),
+    "*"
+  );
+
+  DRAWIO.style.display = "flex";
+  OPEN_DRAW.textContent = "X";
+}
+cargarDiagramasColaborativos();

@@ -43,16 +43,27 @@ DATA.appendChild(DRAW_LIST);
 
 DRAWIO.style.display = "none";
 OPEN_DRAW.addEventListener("click", function () {
-  if (DRAWIO.style.display === "none") {
-    DRAWIO.style.display = "flex";
-    OPEN_DRAW.textContent = "X";
-  } else {
+  const visible = DRAWIO.style.display !== "none";
+  
+  if (visible) {
     DRAWIO.style.display = "none";
     OPEN_DRAW.textContent = "+";
-  }
+  } else {
+    // Mostrar editor
+    DRAWIO.style.display = "flex";
+    OPEN_DRAW.textContent = "X";
 
-  console.log("Formulario visible:", DRAWIO.style.display === "block");
+    // Cargar un diagrama vacío
+    DRAWIO.contentWindow.postMessage(
+      JSON.stringify({
+        action: "load",
+        xml: '<mxfile><diagram name="Nuevo" id="nuevo1"></diagram></mxfile>'
+      }),
+      "*"
+    );
+  }
 });
+
 
 const iframe = document.getElementById('drawioFrame');
 
@@ -135,16 +146,13 @@ window.addEventListener('message', async function (evt) {
 });
 
 //SELECT
-function mostrarListaDiagramas(diagramas) {
+async function mostrarListaDiagramas(diagramas) {
+  const { data: { user } } = await supabaseClient.auth.getUser();
   const contenedor = document.getElementById("listaDiagramas");
   contenedor.innerHTML = "";
 
-  if (diagramas.length === 0) {
-    contenedor.innerHTML = "<p>No hay diagramas guardados aún.</p>";
-    return;
-  }
-
   const ul = document.createElement("ul");
+
   diagramas.forEach((d) => {
     const li = document.createElement("li");
     li.innerHTML = `
@@ -158,11 +166,39 @@ function mostrarListaDiagramas(diagramas) {
     btnVer.onclick = () => cargarDiagramaDesdeBD(d.id);
 
     li.appendChild(btnVer);
+
+    // Mostrar botón eliminar solo al autor
+    if (user.email === d.correo_usuario) {
+      const btnDel = document.createElement("button");
+      btnDel.textContent = "Eliminar";
+      btnDel.onclick = () => eliminarDiagrama(d.id);
+      li.appendChild(btnDel);
+    }
+
     ul.appendChild(li);
   });
 
   contenedor.appendChild(ul);
 }
+//DELETE
+async function eliminarDiagrama(id) {
+  if (!confirm("¿Estás seguro de eliminar este diagrama?")) return;
+
+  const { error } = await supabaseClient
+    .from("diagramas")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error al eliminar:", error);
+    alert("No se pudo eliminar el diagrama.");
+  } else {
+    alert("Diagrama eliminado.");
+    cargarDiagramasColaborativos();
+  }
+}
+
+
 
 async function cargarDiagramaDesdeBD(id) {
   const { data, error } = await supabaseClient
@@ -191,3 +227,20 @@ async function cargarDiagramaDesdeBD(id) {
   OPEN_DRAW.textContent = "X";
 }
 cargarDiagramasColaborativos();
+
+// limpiar DRaw
+if (msg.event === 'exit') {
+  console.log('Editor cerrado');
+
+  // Limpiar el iframe para cargar un nuevo diagrama
+  DRAWIO.contentWindow.postMessage(
+    JSON.stringify({
+      action: "load",
+      xml: '<mxfile><diagram name="Nuevo" id="nuevo1"></diagram></mxfile>'
+    }),
+    "*"
+  );
+
+  DRAWIO.style.display = "none";
+  OPEN_DRAW.textContent = "+";
+}

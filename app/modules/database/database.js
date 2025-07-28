@@ -6,13 +6,6 @@ const SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2dXFua3RtanZvdGRsbmJibmh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1MTMxNzUsImV4cCI6MjA1NjA4OTE3NX0.NBjk0irYgv23oENmlKSLHJWG6fykfsI8X1hUHrVwT2Y';
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-//Security Obtener usuario (verifica si ya estás autenticado)
-let user = null;
-supabaseClient.auth.getUser().then(({ data }) => {
-  user = data.user;
-  console.log("Usuario autenticado:", user?.email);
-});
-
 const FRAMEAPP = document.getElementById('FRAMEAPP');
 
 const DATA = document.createElement('section');
@@ -32,76 +25,36 @@ DRAWIO.style = 'width: 100%; height: 600px; border: 0';
 DATA.appendChild(DRAWIO);
 
 const OPEN_DRAW = document.createElement("button");
-OPEN_DRAW.textContent = "+";
+OPEN_DRAW.textContent = "++";
 OPEN_DRAW.id = "OPEN_DRAW";
 DATA.appendChild(OPEN_DRAW);
 
-const DRAW_LIST = document.createElement("section");
-DRAW_LIST.id = "listaDiagramas";
-DRAW_LIST.textContent = "esta es la lista";
-DATA.appendChild(DRAW_LIST);
-
+//Logica para abrir y cerrar los forms de las apps
+// Al principio, ocultamos el formulario usando la clase "hidden"
 DRAWIO.style.display = "none";
+// Evento para abrir/cerrar el formulario al hacer clic en el botón
 OPEN_DRAW.addEventListener("click", function () {
-  const visible = DRAWIO.style.display !== "none";
-  
-  if (visible) {
-    DRAWIO.style.display = "none";
-    OPEN_DRAW.textContent = "+";
+  if (DRAWIO.style.display === "none") {
+    DRAWIO.style.display = "flex"; // Mostrar el formulario
+    OPEN_DRAW.textContent = "X"; // Cambiar texto del botón
   } else {
-    // Mostrar editor
-    DRAWIO.style.display = "flex";
-    OPEN_DRAW.textContent = "X";
-
-    // Cargar un diagrama vacío
-    DRAWIO.contentWindow.postMessage(
-      JSON.stringify({
-        action: "load",
-        xml: '<mxfile><diagram name="Nuevo" id="nuevo1"></diagram></mxfile>'
-      }),
-      "*"
-    );
+    DRAWIO.style.display = "none"; // Ocultar el formulario
+    OPEN_DRAW.textContent = "+"; // Cambiar texto del botón
   }
+
+  console.log("Formulario visible:", DRAWIO.style.display === "block");
 });
 
-
 const iframe = document.getElementById('drawioFrame');
-
-async function cargarDiagramasColaborativos() {
-  const { data: { user } } = await supabaseClient.auth.getUser();
-
-  if (!user) {
-    alert("Debes iniciar sesión para ver los diagramas.");
-    return;
-  }
-
-  const { data, error } = await supabaseClient
-    .from("diagramas")
-    .select("id, nombre, created_at, correo_usuario")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Error al obtener diagramas:", error);
-    return;
-  }
-
-  mostrarListaDiagramas(data);
-}
-
-// Escucha Y guarda mensajes desde draw.io
-//INSERT
-window.addEventListener('message', async function (evt) {
-  let msg;
-  try {
-    msg = JSON.parse(evt.data);
-  } catch (e) {
-    return; // mensaje no válido
-  }
+// Escucha mensajes desde draw.io
+window.addEventListener('message', function (evt) {
+  const msg = JSON.parse(evt.data);
 
   if (msg.event === 'init') {
+    // Se inicializó el iframe, puedes enviar el diagrama
     const exampleXml =
       '<mxfile><diagram name="Página-1" id="abc123">...</diagram></mxfile>';
-    DRAWIO.contentWindow.postMessage(
+      DRAWIO.contentWindow.postMessage(
       JSON.stringify({
         action: 'load',
         xml: exampleXml,
@@ -111,33 +64,8 @@ window.addEventListener('message', async function (evt) {
   }
 
   if (msg.event === 'save') {
-    const xml = msg.xml;
-
-    if (!user) {
-      console.error("Usuario no autenticado.");
-      alert("Debes iniciar sesión para guardar el diagrama.");
-      return;
-    }
-
-    const nombre = prompt("¿Qué nombre deseas darle a este diagrama?");
-    if (!nombre) return;
-
-    // Guardar en Supabase
-    const { error } = await supabaseClient.from('diagramas').insert([
-      {
-        nombre: nombre,
-        contenido: xml,
-        correo_usuario: user.email,
-      },
-    ]);
-
-    if (error) {
-      console.error("Error al guardar en Supabase:", error);
-      alert("Hubo un error al guardar el diagrama.");
-    } else {
-      console.log("Diagrama guardado correctamente.");
-      alert("¡Diagrama guardado!");
-    }
+    // El usuario hizo clic en guardar, aquí recibes el XML
+    console.log('Diagrama guardado:', msg.xml);
   }
 
   if (msg.event === 'exit') {
@@ -145,102 +73,10 @@ window.addEventListener('message', async function (evt) {
   }
 });
 
-//SELECT
-async function mostrarListaDiagramas(diagramas) {
-  const { data: { user } } = await supabaseClient.auth.getUser();
-  const contenedor = document.getElementById("listaDiagramas");
-  contenedor.innerHTML = "";
-
-  const ul = document.createElement("ul");
-
-  diagramas.forEach((d) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${d.nombre}</strong> 
-      (${new Date(d.created_at).toLocaleString()})<br>
-      <small>Creado por: ${d.correo_usuario}</small>
-    `;
-
-    const btnVer = document.createElement("button");
-    btnVer.textContent = "Ver";
-    btnVer.onclick = () => cargarDiagramaDesdeBD(d.id);
-
-    li.appendChild(btnVer);
-
-    // Mostrar botón eliminar solo al autor
-    if (user.email === d.correo_usuario) {
-      const btnDel = document.createElement("button");
-      btnDel.textContent = "Eliminar";
-      btnDel.onclick = () => eliminarDiagrama(d.id);
-      li.appendChild(btnDel);
-    }
-
-    ul.appendChild(li);
-  });
-
-  contenedor.appendChild(ul);
-}
-//DELETE
-async function eliminarDiagrama(id) {
-  if (!confirm("¿Estás seguro de eliminar este diagrama?")) return;
-
-  const { error } = await supabaseClient
-    .from("diagramas")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-    console.error("Error al eliminar:", error);
-    alert("No se pudo eliminar el diagrama.");
-  } else {
-    alert("Diagrama eliminado.");
-    cargarDiagramasColaborativos();
-  }
-}
-
-
-
-async function cargarDiagramaDesdeBD(id) {
-  const { data, error } = await supabaseClient
-    .from("diagramas")
-    .select("contenido")
-    .eq("id", id)
-    .single();
-
-  if (error) {
-    console.error("Error al cargar diagrama:", error);
-    alert("No se pudo cargar el diagrama.");
-    return;
-  }
-
-  const xml = data.contenido;
-
-  DRAWIO.contentWindow.postMessage(
-    JSON.stringify({
-      action: "load",
-      xml: xml,
-    }),
-    "*"
+document.getElementById('btnLoad').onclick = function () {
+  iframe.contentWindow.postMessage(
+    JSON.stringify({ action: 'export' }),
+    '*'
   );
+};
 
-  DRAWIO.style.display = "flex";
-  OPEN_DRAW.textContent = "X";
-}
-cargarDiagramasColaborativos();
-
-// limpiar DRaw
-if (msg.event === 'exit') {
-  console.log('Editor cerrado');
-
-  // Limpiar el iframe para cargar un nuevo diagrama
-  DRAWIO.contentWindow.postMessage(
-    JSON.stringify({
-      action: "load",
-      xml: '<mxfile><diagram name="Nuevo" id="nuevo1"></diagram></mxfile>'
-    }),
-    "*"
-  );
-
-  DRAWIO.style.display = "none";
-  OPEN_DRAW.textContent = "+";
-}
